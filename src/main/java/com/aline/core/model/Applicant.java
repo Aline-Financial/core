@@ -82,6 +82,21 @@ public class Applicant {
     private LocalDate dateOfBirth;
 
     /**
+     * Gender
+     * <p>Can be one of the following values (case-insensitive):</p>
+     * <p><em>Valid values are determined for database uniformity.</em></p>
+     * <ul>
+     *     <li>Male</li>
+     *     <li>Female</li>
+     *     <li>Other</li>
+     *     <li>Not Specified</li>
+     * </ul>
+     */
+    @NotNull
+    @Pattern(regexp = "(?i)^(Male|Female|Other|Not Specified)$", message = "'${validatedValue}' is not an allowed value.")
+    private String gender;
+
+    /**
      * Email address
      * <p>Must be unique.</p>
      * @see Email
