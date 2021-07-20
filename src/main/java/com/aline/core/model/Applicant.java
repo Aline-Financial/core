@@ -1,5 +1,6 @@
 package com.aline.core.model;
 
+import com.aline.core.validation.annotations.DateOfBirth;
 import com.aline.core.validation.annotations.Name;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -7,14 +8,12 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -32,21 +31,45 @@ public class Applicant {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Name
+    /**
+     * First name
+     * <p>Uses custom name validator.</p>
+     *
+     * @see Name
+     */
+    @Name(message = "'${validatedValue}' is not a valid name.")
     @NotNull
     private String firstName;
 
+    /**
+     * Middle name
+     * <p><em>Not required.</em></p>
+     * <p>Uses custom name validator.</p>
+     *
+     * @see Name
+     */
+    @Name(message = "'${validatedValue}' is not a valid name.")
     private String middleName;
 
+    /**
+     * Last name
+     * <p>Uses custom name validator.</p>
+     *
+     * @see Name
+     */
+    @Name(message = "'${validatedValue}' is not a valid name.")
     @NotNull
     private String lastName;
 
     /**
      * Date of birth
-     * Stored as {@link LocalDate}.
+     * <p>Stored as {@link LocalDate}.</p>
+     * <p>Uses custom date of birth validator.</p>
      *
+     * @see DateOfBirth
      * @see LocalDate
      */
+    @DateOfBirth(minAge = 18, message = "Age must be at least 18.")
     @NotNull
     private LocalDate dateOfBirth;
 
@@ -56,7 +79,7 @@ public class Applicant {
      * @see Email
      */
     @Column(unique = true, nullable = false)
-    @Email(message = "${validatedValue} is not a valid email.")
+    @Email(message = "'${validatedValue}' is not a valid email.")
     private String email;
 
     /**
@@ -67,7 +90,7 @@ public class Applicant {
      * </p>
      */
     @Column(unique = true, nullable = false)
-    @Pattern(regexp = "^(\\+\\d[-\\s.])?\\(?\\d{3}\\)?[-\\s.]\\d{3}[-\\s.]\\d{4}$", message = "${validatedValue} is not a valid phone number.")
+    @Pattern(regexp = "^(\\+\\d[-\\s.])?\\(?\\d{3}\\)?[-\\s.]\\d{3}[-\\s.]\\d{4}$", message = "'${validatedValue}' is not a valid phone number.")
     private String phone;
 
     /**
@@ -78,7 +101,7 @@ public class Applicant {
      * </p>
      */
     @Column(unique = true, nullable = false)
-    @Pattern(regexp = "^\\d{3}[\\s.-]\\d{2}[\\s.-]\\d{4}$", message = "${validatedValue} is not formatted as a Social Security number.")
+    @Pattern(regexp = "^\\d{3}[\\s.-]\\d{2}[\\s.-]\\d{4}$", message = "'${validatedValue}' is not formatted as a Social Security number.")
     private String socialSecurity;
 
     /**
@@ -113,7 +136,7 @@ public class Applicant {
      * </p>
      */
     @NotNull
-    @Pattern(regexp = "^([0-9]+([a-zA-Z]+)?)\\s(.*)(\\s)([a-zA-Z]+)(\\.)?(\\s(#?(\\w+))|([A-Za-z]+\\.?(\\w+)))?$", message = "${validatedValue} is not a valid address.")
+    @Pattern(regexp = "^([0-9]+([a-zA-Z]+)?)\\s(.*)(\\s)([a-zA-Z]+)(\\.)?(\\s(#?(\\w+))|([A-Za-z]+\\.?(\\w+)))?$", message = "'${validatedValue}' is not a valid address.")
     private String address;
 
     /**
@@ -136,7 +159,7 @@ public class Applicant {
      * </em>
      */
     @NotNull
-    @Pattern(regexp = "^\\d{5}(-\\d{4})?$")
+    @Pattern(regexp = "^\\d{5}(-\\d{4})?$", message = "'${validatedValue}' is not in a valid zipcode format.")
     private String zipcode;
 
     /**
