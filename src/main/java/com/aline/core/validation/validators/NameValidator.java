@@ -5,7 +5,7 @@ import com.aline.core.validation.annotations.Name;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-public class NameValidator implements ConstraintValidator<Name, String > {
+public class NameValidator implements ConstraintValidator<Name, String> {
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
         if (value == null) {
