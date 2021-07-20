@@ -24,7 +24,10 @@ import java.time.LocalDate;
  *     <li>{@link Name}</li>
  *     <li>{@link DateOfBirth}</li>
  *     <li>{@link Gender}</li>
+ *     <li>{@link PhoneNumber}</li>
  *     <li>{@link SocialSecurity}</li>
+ *     <li>{@link Address}</li>
+ *     <li>{@link Zipcode}</li>
  * </ul>
  */
 @Data
