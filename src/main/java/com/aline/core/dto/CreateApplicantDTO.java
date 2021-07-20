@@ -167,7 +167,7 @@ public class CreateApplicantDTO implements Serializable {
      */
     @Zipcode(message = "'${validatedValue}' is not in a valid zipcode format.")
     @NotNull(message = "Zipcode is required.")
-    @NotBlank(message = "Zipcode must not be null.")
+    @NotBlank(message = "Zipcode must not be blank.")
     private String zipcode;
 
     /**
@@ -175,22 +175,22 @@ public class CreateApplicantDTO implements Serializable {
      * <p>Validated by {@link Address}</p>
      */
     @Address(message = "'${validatedValue}' is not a valid address.")
-    @NotNull(message = "Address is required.")
-    @NotBlank(message = "Address must not be blank.")
+    @NotNull(message = "Mailing address is required.")
+    @NotBlank(message = "Mailing address must not be blank.")
     private String mailingAddress;
 
     /**
      * Mailing City
      */
-    @NotNull(message = "City is required.")
-    @NotBlank(message = "City must not be blank.")
+    @NotNull(message = "Mailing city is required.")
+    @NotBlank(message = "Mailing city must not be blank.")
     private String mailingCity;
 
     /**
      * Mailing State
      */
-    @NotNull(message = "State is required.")
-    @NotBlank(message = "State must not be blank.")
+    @NotNull(message = "Mailing state is required.")
+    @NotBlank(message = "Mailing state must not be blank.")
     private String mailingState;
 
     /**
@@ -198,8 +198,8 @@ public class CreateApplicantDTO implements Serializable {
      * <p>Validated by {@link Zipcode}</p>
      */
     @Zipcode(message = "'${validatedValue}' is not in a valid zipcode format.")
-    @NotNull(message = "Zipcode is required.")
-    @NotBlank(message = "Zipcode must not be null.")
+    @NotNull(message = "Mailing zipcode is required.")
+    @NotBlank(message = "Mailing zipcode must not be blank.")
     private String mailingZipcode;
 
 }

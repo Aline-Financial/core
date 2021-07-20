@@ -210,20 +210,20 @@ public class Applicant {
      * </p>
      * @see Address
      */
-    @NotNull(message = "Address is required.")
+    @NotNull(message = "Mailing address is required.")
     @Address(message = "'${validatedValue}' is not a valid address.")
     private String mailingAddress;
 
     /**
      * Mailing City
      */
-    @NotNull(message = "City is required.")
+    @NotNull(message = "Mailing city is required.")
     private String mailingCity;
 
     /**
      * Mailing State (USA)
      */
-    @NotNull(message = "State is required.")
+    @NotNull(message = "Mailing state is required.")
     private String mailingState;
 
     /**
@@ -233,7 +233,7 @@ public class Applicant {
      *     Ex. <code>12345</code> or <code>12345-1234</code>
      * </em>
      */
-    @NotNull(message = "Zipcode is required.")
+    @NotNull(message = "Mailing zipcode is required.")
     @Zipcode(message = "'${validatedValue}' is not in a valid zipcode format.")
     private String mailingZipcode;
 
