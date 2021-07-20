@@ -9,7 +9,13 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+import java.time.LocalDate;
 
+/**
+ * <p>{@link LocalDate} must represent
+ * a birth date that results in the age being at least
+ * the minimum age provided by <code>minAge</code></code></p>
+ */
 @Target({ ElementType.METHOD, ElementType.FIELD, ElementType.ANNOTATION_TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = DateOfBirthValidator.class)

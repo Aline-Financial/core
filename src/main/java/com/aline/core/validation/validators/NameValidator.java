@@ -11,6 +11,6 @@ public class NameValidator implements ConstraintValidator<Name, String> {
         if (value == null) {
             return true;
         }
-        return value.matches("$[A-Za-z][A-Za-z\\-\\s]+$");
+        return value.matches("^[A-Za-z][A-Za-z\\-\\s]+$");
     }
 }

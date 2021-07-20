@@ -131,10 +131,14 @@ public class Applicant {
      *     Must be in street address format.
      * </p>
      * <p>
+     *     Uses custom address validator.
+     * </p>
+     * <p>
      *     <em>Ex. 1234 Address St.</em>
      *     <br>or<br>
      *     <em>1234 Street Ln. Apt. 123</em>
      * </p>
+     * @see Address
      */
     @NotNull
     @Address(message = "'${validatedValue}' is not a valid address.")
