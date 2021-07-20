@@ -22,6 +22,12 @@ import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+/**
+ * Applicant Model
+ * <p>
+ *     JPA Entity that represents an applicant.
+ * </p>
+ */
 @Getter
 @Setter
 @ToString
