@@ -1,5 +1,6 @@
 package com.aline.core.model;
 
+import com.aline.core.validation.annotations.Address;
 import com.aline.core.validation.annotations.DateOfBirth;
 import com.aline.core.validation.annotations.Name;
 import lombok.Getter;
@@ -136,7 +137,7 @@ public class Applicant {
      * </p>
      */
     @NotNull
-    @Pattern(regexp = "^([0-9]+([a-zA-Z]+)?)\\s(.*)(\\s)([a-zA-Z]+)(\\.)?(\\s(#?(\\w+))|([A-Za-z]+\\.?(\\w+)))?$", message = "'${validatedValue}' is not a valid address.")
+    @Address(message = "'${validatedValue}' is not a valid address.")
     private String address;
 
     /**
