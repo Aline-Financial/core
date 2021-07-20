@@ -1,6 +1,7 @@
 package com.aline.core.exception.handler;
 
 import com.aline.core.exception.BadRequestException;
+import com.aline.core.exception.ConflictException;
 import com.aline.core.exception.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -36,6 +39,14 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 .body(e.getMessage());
     }
 
+    @ExceptionHandler(ConflictException.class)
+    public ResponseEntity<String> handleConflictExceptions(Exception e) {
+        log.error(e.toString());
+        return ResponseEntity
+                .status(HttpStatus.CONFLICT)
+                .body(e.getMessage());
+    }
+
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException e, HttpHeaders headers, HttpStatus status, WebRequest request) {
         log.error(e.toString());
@@ -43,6 +54,17 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return ResponseEntity
                 .badRequest()
                 .body(fieldErrors);
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<List<String>> handleConstraintViolation(ConstraintViolationException e) {
+        log.error(e.toString());
+        List<String> violations = e.getConstraintViolations().stream()
+                .map(ConstraintViolation::getMessage)
+                .collect(Collectors.toList());
+        return ResponseEntity
+                .badRequest()
+                .body(violations);
     }
 
     @ExceptionHandler(Exception.class)
