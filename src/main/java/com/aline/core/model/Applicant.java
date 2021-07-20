@@ -149,7 +149,6 @@ public class Applicant {
      *     Income cannot be less than 0.
      * </p>
      */
-    @NotNull(message = "Income is required.")
     @Min(value = 0, message = "You cannot have a negative income.")
     private int income;
 
@@ -168,7 +167,7 @@ public class Applicant {
      * </p>
      * @see Address
      */
-    @NotNull
+    @NotNull(message = "Address is required.")
     @Address(message = "'${validatedValue}' is not a valid address.")
     private String address;
 
@@ -194,6 +193,49 @@ public class Applicant {
     @NotNull(message = "Zipcode is required.")
     @Zipcode(message = "'${validatedValue}' is not in a valid zipcode format.")
     private String zipcode;
+
+
+    /**
+     * Mailing address
+     * <p>
+     *     Must be in street address format.
+     * </p>
+     * <p>
+     *     Uses custom address validator.
+     * </p>
+     * <p>
+     *     <em>Ex. 1234 Address St.</em>
+     *     <br>or<br>
+     *     <em>1234 Street Ln. Apt. 123</em>
+     * </p>
+     * @see Address
+     */
+    @NotNull(message = "Address is required.")
+    @Address(message = "'${validatedValue}' is not a valid address.")
+    private String mailingAddress;
+
+    /**
+     * Mailing City
+     */
+    @NotNull(message = "City is required.")
+    private String mailingCity;
+
+    /**
+     * Mailing State (USA)
+     */
+    @NotNull(message = "State is required.")
+    private String mailingState;
+
+    /**
+     * Mailing ZIP code
+     * <p>Can use 5 digit zip code or ZIP +4 format.</p>
+     * <em>
+     *     Ex. <code>12345</code> or <code>12345-1234</code>
+     * </em>
+     */
+    @NotNull(message = "Zipcode is required.")
+    @Zipcode(message = "'${validatedValue}' is not in a valid zipcode format.")
+    private String mailingZipcode;
 
     /**
      * Timestamp for the last time this entity was modified.
