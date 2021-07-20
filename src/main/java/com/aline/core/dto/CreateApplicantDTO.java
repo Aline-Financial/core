@@ -14,6 +14,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.time.LocalDate;
 
 /**
@@ -27,7 +28,7 @@ import java.time.LocalDate;
  * </ul>
  */
 @Data
-public class CreateApplicantDTO {
+public class CreateApplicantDTO implements Serializable {
 
     /**
      * First name
