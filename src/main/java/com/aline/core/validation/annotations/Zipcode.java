@@ -1,6 +1,6 @@
 package com.aline.core.validation.annotations;
 
-import com.aline.core.validation.validators.DateOfBirthValidator;
+import com.aline.core.validation.validators.ZipcodeValidator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -9,22 +9,16 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-import java.time.LocalDate;
 
 /**
- * <p>{@link LocalDate} must represent
- * a birth date that results in the age being at least
- * the minimum age provided by <code>minAge</code></code></p> property.
+ * String must be a ZIP code in 5 digit or +4 format.
  */
 @Target({ ElementType.METHOD, ElementType.FIELD, ElementType.ANNOTATION_TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = DateOfBirthValidator.class)
+@Constraint(validatedBy = ZipcodeValidator.class)
 @Documented
-public @interface DateOfBirth {
-
-    int minAge() default 0;
-
-    String message() default "Date of birth does not meet the minimum age requirement.";
+public @interface Zipcode {
+    String message() default "'${validatedValue}' is not a valid zipcode.";
 
     Class<?>[] groups() default {};
 
@@ -34,6 +28,6 @@ public @interface DateOfBirth {
     @Retention(RetentionPolicy.RUNTIME)
     @Documented
     @interface List {
-        DateOfBirth[] value();
+        Zipcode[] value();
     }
 }

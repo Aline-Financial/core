@@ -3,6 +3,7 @@ package com.aline.core.model;
 import com.aline.core.validation.annotations.Address;
 import com.aline.core.validation.annotations.DateOfBirth;
 import com.aline.core.validation.annotations.Name;
+import com.aline.core.validation.annotations.Zipcode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -170,7 +171,7 @@ public class Applicant {
      * </em>
      */
     @NotNull
-    @Pattern(regexp = "^\\d{5}(-\\d{4})?$", message = "'${validatedValue}' is not in a valid zipcode format.")
+    @Zipcode(message = "'${validatedValue}' is not in a valid zipcode format.")
     private String zipcode;
 
     /**
