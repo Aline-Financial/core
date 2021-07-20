@@ -22,7 +22,6 @@ import javax.persistence.Id;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -95,8 +94,8 @@ public class Applicant {
      *     <li>Not Specified</li>
      * </ul>
      */
-    @NotNull
     @Gender(message = "'${validatedValue}' is not an allowed value.")
+    @NotNull(message = "Gender is required.")
     private String gender;
 
     /**
@@ -106,6 +105,7 @@ public class Applicant {
      */
     @Column(unique = true, nullable = false)
     @Email(message = "'${validatedValue}' is not a valid email.")
+    @NotNull(message = "Email is required.")
     private String email;
 
     /**
@@ -116,6 +116,7 @@ public class Applicant {
      * </p>
      */
     @Column(unique = true, nullable = false)
+    @NotNull(message = "Phone number is required.")
     @PhoneNumber
     private String phone;
 
@@ -127,6 +128,7 @@ public class Applicant {
      * </p>
      */
     @Column(unique = true, nullable = false)
+    @NotNull(message = "Social Security is required.")
     @SocialSecurity
     private String socialSecurity;
 
@@ -135,6 +137,7 @@ public class Applicant {
      * <p>Must be unique.</p>
      */
     @Column(unique = true, nullable = false)
+    @NotNull(message = "Driver's license is invalid.")
     private String driversLicense;
 
     /**
@@ -146,7 +149,7 @@ public class Applicant {
      *     Income cannot be less than 0.
      * </p>
      */
-    @NotNull
+    @NotNull(message = "Income is required.")
     @Min(value = 0, message = "You cannot have a negative income.")
     private int income;
 
@@ -172,13 +175,13 @@ public class Applicant {
     /**
      * Billing City
      */
-    @NotNull
+    @NotNull(message = "City is required.")
     private String city;
 
     /**
      * Billing State (USA)
      */
-    @NotNull
+    @NotNull(message = "State is required.")
     private String state;
 
     /**
@@ -188,7 +191,7 @@ public class Applicant {
      *     Ex. <code>12345</code> or <code>12345-1234</code>
      * </em>
      */
-    @NotNull
+    @NotNull(message = "Zipcode is required.")
     @Zipcode(message = "'${validatedValue}' is not in a valid zipcode format.")
     private String zipcode;
 
