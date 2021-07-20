@@ -4,6 +4,8 @@ import com.aline.core.validation.annotations.Address;
 import com.aline.core.validation.annotations.DateOfBirth;
 import com.aline.core.validation.annotations.Gender;
 import com.aline.core.validation.annotations.Name;
+import com.aline.core.validation.annotations.PhoneNumber;
+import com.aline.core.validation.annotations.SocialSecurity;
 import com.aline.core.validation.annotations.Zipcode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -114,7 +116,7 @@ public class Applicant {
      * </p>
      */
     @Column(unique = true, nullable = false)
-    @Pattern(regexp = "^(\\+\\d[-\\s.])?\\(?\\d{3}\\)?[-\\s.]\\d{3}[-\\s.]\\d{4}$", message = "'${validatedValue}' is not a valid phone number.")
+    @PhoneNumber
     private String phone;
 
     /**
@@ -125,7 +127,7 @@ public class Applicant {
      * </p>
      */
     @Column(unique = true, nullable = false)
-    @Pattern(regexp = "^\\d{3}[\\s.-]\\d{2}[\\s.-]\\d{4}$", message = "'${validatedValue}' is not formatted as a Social Security number.")
+    @SocialSecurity
     private String socialSecurity;
 
     /**
