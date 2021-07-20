@@ -34,7 +34,7 @@ build/
 ### VS Code ###
 .vscode/
 
-### Eclise ###
+### Eclipse ###
 .metadata
 bin/
 tmp/
