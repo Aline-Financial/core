@@ -2,6 +2,7 @@ package com.aline.core.model;
 
 import com.aline.core.validation.annotations.Address;
 import com.aline.core.validation.annotations.DateOfBirth;
+import com.aline.core.validation.annotations.Gender;
 import com.aline.core.validation.annotations.Name;
 import com.aline.core.validation.annotations.Zipcode;
 import lombok.Getter;
@@ -93,7 +94,7 @@ public class Applicant {
      * </ul>
      */
     @NotNull
-    @Pattern(regexp = "(?i)^(Male|Female|Other|Not Specified)$", message = "'${validatedValue}' is not an allowed value.")
+    @Gender(message = "'${validatedValue}' is not an allowed value.")
     private String gender;
 
     /**

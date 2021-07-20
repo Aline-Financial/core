@@ -30,10 +30,4 @@ public @interface DateOfBirth {
 
     Class<? extends Payload>[] payload() default {};
 
-    @Target({ElementType.FIELD, ElementType.METHOD, ElementType.ANNOTATION_TYPE})
-    @Retention(RetentionPolicy.RUNTIME)
-    @Documented
-    @interface List {
-        DateOfBirth[] value();
-    }
 }

@@ -23,11 +23,4 @@ public @interface Zipcode {
     Class<?>[] groups() default {};
 
     Class<? extends Payload>[] payload() default {};
-
-    @Target({ElementType.FIELD, ElementType.METHOD, ElementType.ANNOTATION_TYPE})
-    @Retention(RetentionPolicy.RUNTIME)
-    @Documented
-    @interface List {
-        Zipcode[] value();
-    }
 }

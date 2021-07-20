@@ -25,11 +25,4 @@ public @interface Name {
 
     Class<? extends Payload>[] payload() default {};
 
-    @Target({ElementType.FIELD, ElementType.METHOD, ElementType.ANNOTATION_TYPE})
-    @Retention(RetentionPolicy.RUNTIME)
-    @Documented
-    @interface List {
-        Name[] value();
-    }
-
 }
