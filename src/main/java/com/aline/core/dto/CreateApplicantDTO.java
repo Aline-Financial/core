@@ -7,6 +7,7 @@ import com.aline.core.validation.annotations.Name;
 import com.aline.core.validation.annotations.PhoneNumber;
 import com.aline.core.validation.annotations.SocialSecurity;
 import com.aline.core.validation.annotations.Zipcode;
+import lombok.Builder;
 import lombok.Data;
 import org.springframework.lang.Nullable;
 
@@ -31,6 +32,7 @@ import java.time.LocalDate;
  * </ul>
  */
 @Data
+@Builder
 public class CreateApplicantDTO implements Serializable {
 
     /**
