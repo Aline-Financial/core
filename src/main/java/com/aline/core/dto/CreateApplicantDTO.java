@@ -1,10 +1,12 @@
 package com.aline.core.dto;
 
+import com.aline.core.validation.annotations.DateOfBirth;
 import com.aline.core.validation.annotations.Name;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import java.time.LocalDate;
 
 /**
  * DTO to create an applicant
@@ -27,5 +29,8 @@ public class CreateApplicantDTO {
     @Name(message = "'${validatedValue}' is not a valid name.")
     @NotNull(message = "Last name is required.")
     private String lastName;
+
+    @DateOfBirth(minAge = 18, message = "")
+    private LocalDate dateOfBirth;
 
 }

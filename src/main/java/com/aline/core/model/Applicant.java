@@ -47,7 +47,7 @@ public class Applicant {
      * @see Name
      */
     @Name(message = "'${validatedValue}' is not a valid name.")
-    @NotNull
+    @NotNull(message = "First name is required.")
     private String firstName;
 
     /**
@@ -67,7 +67,7 @@ public class Applicant {
      * @see Name
      */
     @Name(message = "'${validatedValue}' is not a valid name.")
-    @NotNull
+    @NotNull(message = "Last name is required.")
     private String lastName;
 
     /**
@@ -79,7 +79,7 @@ public class Applicant {
      * @see LocalDate
      */
     @DateOfBirth(minAge = 18, message = "Age must be at least 18.")
-    @NotNull
+    @NotNull(message = "Date of birth is required.")
     private LocalDate dateOfBirth;
 
     /**
