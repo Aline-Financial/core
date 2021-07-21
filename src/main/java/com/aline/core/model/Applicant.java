@@ -281,11 +281,11 @@ public class Applicant {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Applicant applicant = (Applicant) o;
-        return firstName.equals(applicant.firstName) && lastName.equals(applicant.lastName) && dateOfBirth.equals(applicant.dateOfBirth) && email.equals(applicant.email) && phone.equals(applicant.phone) && socialSecurity.equals(applicant.socialSecurity);
+        return Objects.equals(id, applicant.id) && email.equals(applicant.email) && phone.equals(applicant.phone) && socialSecurity.equals(applicant.socialSecurity) && driversLicense.equals(applicant.driversLicense);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(firstName, lastName, dateOfBirth, email, phone, socialSecurity);
+        return Objects.hash(id, email, phone, socialSecurity, driversLicense);
     }
 }
