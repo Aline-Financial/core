@@ -136,7 +136,8 @@ public class CreateApplicantDTO implements Serializable {
      * <p>Cannot be negative.</p>
      */
     @Min(value = 0, message = "You cannot have a negative income.")
-    private int income;
+    @NotNull(message = "Income is required")
+    private Integer income;
 
     /**
      * Billing Address
