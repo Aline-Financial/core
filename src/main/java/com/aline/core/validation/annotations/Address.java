@@ -20,9 +20,15 @@ import java.lang.annotation.Target;
 public @interface Address {
 
     String message() default "Address is not valid.";
+    Type type() default Type.DEFAULT;
 
     Class<?>[] groups() default {};
 
     Class<? extends Payload>[] payload() default {};
+
+    enum Type {
+        DEFAULT,
+        MAILING
+    }
 
 }

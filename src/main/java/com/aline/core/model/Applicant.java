@@ -7,7 +7,11 @@ import com.aline.core.validation.annotations.Name;
 import com.aline.core.validation.annotations.PhoneNumber;
 import com.aline.core.validation.annotations.SocialSecurity;
 import com.aline.core.validation.annotations.Zipcode;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
@@ -24,6 +28,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  * Applicant Model
@@ -34,8 +39,11 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @ToString
+@AllArgsConstructor
 @RequiredArgsConstructor
+@NoArgsConstructor
 @Entity
+@Builder
 public class Applicant {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,6 +57,7 @@ public class Applicant {
      */
     @Name(message = "'${validatedValue}' is not a valid name.")
     @NotNull(message = "First name is required.")
+    @NonNull
     private String firstName;
 
     /**
@@ -69,6 +78,7 @@ public class Applicant {
      */
     @Name(message = "'${validatedValue}' is not a valid name.")
     @NotNull(message = "Last name is required.")
+    @NonNull
     private String lastName;
 
     /**
@@ -81,6 +91,7 @@ public class Applicant {
      */
     @DateOfBirth(minAge = 18, message = "Age must be at least 18.")
     @NotNull(message = "Date of birth is required.")
+    @NonNull
     private LocalDate dateOfBirth;
 
     /**
@@ -96,6 +107,7 @@ public class Applicant {
      */
     @Gender(message = "'${validatedValue}' is not an allowed value.")
     @NotNull(message = "Gender is required.")
+    @NonNull
     private String gender;
 
     /**
@@ -106,6 +118,7 @@ public class Applicant {
     @Column(unique = true, nullable = false)
     @Email(message = "'${validatedValue}' is not a valid email.")
     @NotNull(message = "Email is required.")
+    @NonNull
     private String email;
 
     /**
@@ -118,6 +131,7 @@ public class Applicant {
     @Column(unique = true, nullable = false)
     @NotNull(message = "Phone number is required.")
     @PhoneNumber
+    @NonNull
     private String phone;
 
     /**
@@ -130,6 +144,7 @@ public class Applicant {
     @Column(unique = true, nullable = false)
     @NotNull(message = "Social Security is required.")
     @SocialSecurity
+    @NonNull
     private String socialSecurity;
 
     /**
@@ -138,6 +153,7 @@ public class Applicant {
      */
     @Column(unique = true, nullable = false)
     @NotNull(message = "Driver's license is invalid.")
+    @NonNull
     private String driversLicense;
 
     /**
@@ -169,18 +185,21 @@ public class Applicant {
      */
     @NotNull(message = "Address is required.")
     @Address(message = "'${validatedValue}' is not a valid address.")
+    @NonNull
     private String address;
 
     /**
      * Billing City
      */
     @NotNull(message = "City is required.")
+    @NonNull
     private String city;
 
     /**
      * Billing State (USA)
      */
     @NotNull(message = "State is required.")
+    @NonNull
     private String state;
 
     /**
@@ -192,6 +211,7 @@ public class Applicant {
      */
     @NotNull(message = "Zipcode is required.")
     @Zipcode(message = "'${validatedValue}' is not in a valid zipcode format.")
+    @NonNull
     private String zipcode;
 
 
@@ -208,22 +228,27 @@ public class Applicant {
      *     <br>or<br>
      *     <em>1234 Street Ln. Apt. 123</em>
      * </p>
+     * <em>Address Type: MAILING</em>
      * @see Address
+     * @see Address.Type
      */
     @NotNull(message = "Mailing address is required.")
-    @Address(message = "'${validatedValue}' is not a valid address.")
+    @Address(message = "'${validatedValue}' is not a valid address.", type = Address.Type.MAILING)
+    @NonNull
     private String mailingAddress;
 
     /**
      * Mailing City
      */
     @NotNull(message = "Mailing city is required.")
+    @NonNull
     private String mailingCity;
 
     /**
      * Mailing State (USA)
      */
     @NotNull(message = "Mailing state is required.")
+    @NonNull
     private String mailingState;
 
     /**
@@ -235,6 +260,7 @@ public class Applicant {
      */
     @NotNull(message = "Mailing zipcode is required.")
     @Zipcode(message = "'${validatedValue}' is not in a valid zipcode format.")
+    @NonNull
     private String mailingZipcode;
 
     /**
@@ -249,4 +275,16 @@ public class Applicant {
     @CreationTimestamp
     private LocalDateTime createdAt;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Applicant applicant = (Applicant) o;
+        return firstName.equals(applicant.firstName) && lastName.equals(applicant.lastName) && dateOfBirth.equals(applicant.dateOfBirth) && email.equals(applicant.email) && phone.equals(applicant.phone) && socialSecurity.equals(applicant.socialSecurity);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstName, lastName, dateOfBirth, email, phone, socialSecurity);
+    }
 }

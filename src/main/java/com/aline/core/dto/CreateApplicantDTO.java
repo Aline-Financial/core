@@ -7,14 +7,18 @@ import com.aline.core.validation.annotations.Name;
 import com.aline.core.validation.annotations.PhoneNumber;
 import com.aline.core.validation.annotations.SocialSecurity;
 import com.aline.core.validation.annotations.Zipcode;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Builder;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.lang.Nullable;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.time.LocalDate;
 
@@ -73,11 +77,9 @@ public class CreateApplicantDTO implements Serializable {
      * <p>
      *     Validated by {@link DateOfBirth}
      * </p>
-     * <p>
-     *     <em>Age must be 18 years or older.</em>
-     * </p>
      */
-    @DateOfBirth(minAge = 18, message = "Age must be at least 18 years.")
+    @DateOfBirth(minAge = 18, message = "Age must be at least 18.")
+    @NotNull(message = "Date of birth is required.")
     private LocalDate dateOfBirth;
 
     /**
@@ -175,8 +177,9 @@ public class CreateApplicantDTO implements Serializable {
     /**
      * Mailing Address
      * <p>Validated by {@link Address}</p>
+     * <em>Address Type: MAILING</em>
      */
-    @Address(message = "'${validatedValue}' is not a valid address.")
+    @Address(message = "'${validatedValue}' is not a valid address.", type = Address.Type.MAILING)
     @NotNull(message = "Mailing address is required.")
     @NotBlank(message = "Mailing address must not be blank.")
     private String mailingAddress;
