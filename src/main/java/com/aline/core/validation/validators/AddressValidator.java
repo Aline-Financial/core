@@ -1,7 +1,6 @@
 package com.aline.core.validation.validators;
 
 import com.aline.core.validation.annotations.Address;
-import jdk.nashorn.internal.runtime.regexp.joni.Regex;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

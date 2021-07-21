@@ -7,18 +7,14 @@ import com.aline.core.validation.annotations.Name;
 import com.aline.core.validation.annotations.PhoneNumber;
 import com.aline.core.validation.annotations.SocialSecurity;
 import com.aline.core.validation.annotations.Zipcode;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Builder;
 import lombok.Data;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.lang.Nullable;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.time.LocalDate;
 
