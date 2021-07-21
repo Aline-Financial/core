@@ -25,6 +25,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -56,7 +57,7 @@ public class Applicant {
      * @see Name
      */
     @Name(message = "'${validatedValue}' is not a valid name.")
-    @NotNull(message = "First name is required.")
+    @NotBlank(message = "First name is required.")
     @NonNull
     private String firstName;
 
@@ -77,7 +78,7 @@ public class Applicant {
      * @see Name
      */
     @Name(message = "'${validatedValue}' is not a valid name.")
-    @NotNull(message = "Last name is required.")
+    @NotBlank(message = "Last name is required.")
     @NonNull
     private String lastName;
 
@@ -106,7 +107,7 @@ public class Applicant {
      * </ul>
      */
     @Gender(message = "'${validatedValue}' is not an allowed value.")
-    @NotNull(message = "Gender is required.")
+    @NotBlank(message = "Gender is required.")
     @NonNull
     private String gender;
 
@@ -115,9 +116,9 @@ public class Applicant {
      * <p>Must be unique.</p>
      * @see Email
      */
-    @Column(unique = true, nullable = false)
+    @Column(unique = true)
     @Email(message = "'${validatedValue}' is not a valid email.")
-    @NotNull(message = "Email is required.")
+    @NotBlank(message = "Email is required.")
     @NonNull
     private String email;
 
@@ -128,8 +129,8 @@ public class Applicant {
      *     <em>Ex. (123) 456-7890, +1 321-432-1234</em>
      * </p>
      */
-    @Column(unique = true, nullable = false)
-    @NotNull(message = "Phone number is required.")
+    @Column(unique = true)
+    @NotBlank(message = "Phone number is required.")
     @PhoneNumber
     @NonNull
     private String phone;
@@ -141,8 +142,8 @@ public class Applicant {
      *     <em>Ex. 123-45-6789</em>
      * </p>
      */
-    @Column(unique = true, nullable = false)
-    @NotNull(message = "Social Security is required.")
+    @Column(unique = true)
+    @NotBlank(message = "Social Security is required.")
     @SocialSecurity
     @NonNull
     private String socialSecurity;
@@ -152,7 +153,7 @@ public class Applicant {
      * <p>Must be unique.</p>
      */
     @Column(unique = true, nullable = false)
-    @NotNull(message = "Driver's license is invalid.")
+    @NotBlank(message = "Driver's license is invalid.")
     @NonNull
     private String driversLicense;
 
@@ -183,7 +184,7 @@ public class Applicant {
      * </p>
      * @see Address
      */
-    @NotNull(message = "Address is required.")
+    @NotBlank(message = "Address is required.")
     @Address(message = "'${validatedValue}' is not a valid address.")
     @NonNull
     private String address;
@@ -191,14 +192,14 @@ public class Applicant {
     /**
      * Billing City
      */
-    @NotNull(message = "City is required.")
+    @NotBlank(message = "City is required.")
     @NonNull
     private String city;
 
     /**
      * Billing State (USA)
      */
-    @NotNull(message = "State is required.")
+    @NotBlank(message = "State is required.")
     @NonNull
     private String state;
 
@@ -209,7 +210,7 @@ public class Applicant {
      *     Ex. <code>12345</code> or <code>12345-1234</code>
      * </em>
      */
-    @NotNull(message = "Zipcode is required.")
+    @NotBlank(message = "Zipcode is required.")
     @Zipcode(message = "'${validatedValue}' is not in a valid zipcode format.")
     @NonNull
     private String zipcode;
@@ -232,7 +233,7 @@ public class Applicant {
      * @see Address
      * @see Address.Type
      */
-    @NotNull(message = "Mailing address is required.")
+    @NotBlank(message = "Mailing address is required.")
     @Address(message = "'${validatedValue}' is not a valid address.", type = Address.Type.MAILING)
     @NonNull
     private String mailingAddress;
@@ -240,14 +241,14 @@ public class Applicant {
     /**
      * Mailing City
      */
-    @NotNull(message = "Mailing city is required.")
+    @NotBlank(message = "Mailing city is required.")
     @NonNull
     private String mailingCity;
 
     /**
      * Mailing State (USA)
      */
-    @NotNull(message = "Mailing state is required.")
+    @NotBlank(message = "Mailing state is required.")
     @NonNull
     private String mailingState;
 
@@ -258,7 +259,7 @@ public class Applicant {
      *     Ex. <code>12345</code> or <code>12345-1234</code>
      * </em>
      */
-    @NotNull(message = "Mailing zipcode is required.")
+    @NotBlank(message = "Mailing zipcode is required.")
     @Zipcode(message = "'${validatedValue}' is not in a valid zipcode format.")
     @NonNull
     private String mailingZipcode;
