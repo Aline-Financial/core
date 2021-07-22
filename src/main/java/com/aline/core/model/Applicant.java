@@ -273,14 +273,12 @@ public class Applicant {
      * Timestamp for the last time this entity was modified.
      */
     @UpdateTimestamp
-    @NotNull
     private LocalDateTime lastModifiedAt;
 
     /**
      * Timestamp for when the entity was first created.
      */
     @CreationTimestamp
-    @NotNull
     private LocalDateTime createdAt;
 
     @Override
