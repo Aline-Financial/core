@@ -54,7 +54,7 @@ public class Application {
      */
     @ManyToMany
     @JoinTable(
-            name = "application_applicants",
+            name = "application_applicant",
             joinColumns = @JoinColumn(name = "application_id"),
             inverseJoinColumns = @JoinColumn(name = "applicant_id")
     )
