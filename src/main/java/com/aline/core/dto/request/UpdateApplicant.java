@@ -1,4 +1,4 @@
-package com.aline.core.dto;
+package com.aline.core.dto.request;
 
 import com.aline.core.validation.annotations.Address;
 import com.aline.core.validation.annotations.DateOfBirth;
@@ -13,27 +13,19 @@ import org.springframework.lang.Nullable;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
 
 /**
- * DTO to create an applicant
- * <p>Uses custom validators:</p>
- * <ul>
- *     <li>{@link Name}</li>
- *     <li>{@link DateOfBirth}</li>
- *     <li>{@link Gender}</li>
- *     <li>{@link PhoneNumber}</li>
- *     <li>{@link SocialSecurity}</li>
- *     <li>{@link Address}</li>
- *     <li>{@link Zipcode}</li>
- * </ul>
+ * DTO to update an applicant
+ * <p>
+ *     <em>Similar to {@link CreateApplicant} but fields are nullable.</em>
+ * </p>
+ * @see CreateApplicant
  */
 @Data
 @Builder
-public class CreateApplicantDTO implements Serializable {
+public class UpdateApplicant implements Serializable {
 
     /**
      * First name
@@ -42,7 +34,7 @@ public class CreateApplicantDTO implements Serializable {
      * </p>
      */
     @Name(message = "'${validatedValue}' is not a valid name.")
-    @NotBlank(message = "First name is required.")
+    @Nullable
     private String firstName;
 
     /**
@@ -62,7 +54,7 @@ public class CreateApplicantDTO implements Serializable {
      * </p>
      */
     @Name(message = "'${validatedValue}' is not a valid name.")
-    @NotBlank(message = "Last name is required.")
+    @Nullable
     private String lastName;
 
 
@@ -73,7 +65,7 @@ public class CreateApplicantDTO implements Serializable {
      * </p>
      */
     @DateOfBirth(minAge = 18, message = "Age must be at least 18.")
-    @NotNull(message = "Date of birth is required.")
+    @Nullable
     private LocalDate dateOfBirth;
 
     /**
@@ -90,7 +82,7 @@ public class CreateApplicantDTO implements Serializable {
      * </ul>
      */
     @Gender(message = "'${validatedValue}' is not a valid value.")
-    @NotBlank(message = "Gender is required.")
+    @Nullable
     private String gender;
 
     /**
@@ -98,7 +90,7 @@ public class CreateApplicantDTO implements Serializable {
      * <p>Validated by {@link Email}</p>
      */
     @Email(message = "'${validatedValue}' is not a valid email address.")
-    @NotBlank(message = "Email is required.")
+    @Nullable
     private String email;
 
     /**
@@ -106,7 +98,7 @@ public class CreateApplicantDTO implements Serializable {
      * <p>Validated by {@link PhoneNumber}</p>
      */
     @PhoneNumber
-    @NotBlank(message = "Phone number is required.")
+    @Nullable
     private String phone;
 
     /**
@@ -116,13 +108,13 @@ public class CreateApplicantDTO implements Serializable {
      * </p>
      */
     @SocialSecurity
-    @NotBlank(message = "Social Security number is required.")
+    @Nullable
     private String socialSecurity;
 
     /**
      * Driver's license number (can vary per state)
      */
-    @NotBlank(message = "Driver's license is required.")
+    @Nullable
     private String driversLicense;
 
     /**
@@ -133,7 +125,7 @@ public class CreateApplicantDTO implements Serializable {
      * <p>Cannot be negative.</p>
      */
     @Min(value = 0, message = "You cannot have a negative income.")
-    @NotNull(message = "Income is required")
+    @Nullable
     private Integer income;
 
     /**
@@ -141,19 +133,19 @@ public class CreateApplicantDTO implements Serializable {
      * <p>Validated by {@link Address}</p>
      */
     @Address(message = "'${validatedValue}' is not a valid address.")
-    @NotBlank(message = "Address is required.")
+    @Nullable
     private String address;
 
     /**
      * Billing City
      */
-    @NotBlank(message = "City is required.")
+    @Nullable
     private String city;
 
     /**
      * Billing State
      */
-    @NotBlank(message = "State is required.")
+    @Nullable
     private String state;
 
     /**
@@ -161,7 +153,7 @@ public class CreateApplicantDTO implements Serializable {
      * <p>Validated by {@link Zipcode}</p>
      */
     @Zipcode(message = "'${validatedValue}' is not in a valid zipcode format.")
-    @NotBlank(message = "Zipcode is required.")
+    @Nullable
     private String zipcode;
 
     /**
@@ -170,19 +162,19 @@ public class CreateApplicantDTO implements Serializable {
      * <em>Address Type: MAILING</em>
      */
     @Address(message = "'${validatedValue}' is not a valid address.", type = Address.Type.MAILING)
-    @NotBlank(message = "Mailing address is required.")
+    @Nullable
     private String mailingAddress;
 
     /**
      * Mailing City
      */
-    @NotBlank(message = "Mailing city is required.")
+    @Nullable
     private String mailingCity;
 
     /**
      * Mailing State
      */
-    @NotBlank(message = "Mailing state is required.")
+    @Nullable
     private String mailingState;
 
     /**
@@ -190,7 +182,7 @@ public class CreateApplicantDTO implements Serializable {
      * <p>Validated by {@link Zipcode}</p>
      */
     @Zipcode(message = "'${validatedValue}' is not in a valid zipcode format.")
-    @NotBlank(message = "Mailing zipcode is required.")
+    @Nullable
     private String mailingZipcode;
 
 }
