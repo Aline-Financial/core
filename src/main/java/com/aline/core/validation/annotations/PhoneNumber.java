@@ -1,6 +1,6 @@
 package com.aline.core.validation.annotations;
 
-import com.aline.core.validation.validators.AddressValidator;
+import com.aline.core.validation.validators.PhoneNumberValidator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -11,24 +11,16 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * <p>String must be a well-formed street address.</p>
+ * <p>String must be a well-formed phone number.</p>
  */
 @Target({ ElementType.METHOD, ElementType.FIELD, ElementType.ANNOTATION_TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = AddressValidator.class)
+@Constraint(validatedBy = PhoneNumberValidator.class)
 @Documented
-public @interface Address {
-
-    String message() default "Address is not valid.";
-    Type type() default Type.DEFAULT;
+public @interface PhoneNumber {
+    String message() default "'${validatedValue}' is not a valid phone number.";
 
     Class<?>[] groups() default {};
 
     Class<? extends Payload>[] payload() default {};
-
-    enum Type {
-        DEFAULT,
-        MAILING
-    }
-
 }

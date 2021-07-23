@@ -1,16 +1,16 @@
 package com.aline.core.validation.validators;
 
-import com.aline.core.validation.annotations.Zipcode;
+import com.aline.core.validation.annotations.SocialSecurity;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-public class ZipcodeValidator implements ConstraintValidator<Zipcode, String> {
+public class SocialSecurityValidator implements ConstraintValidator<SocialSecurity, String> {
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
         if (value == null) {
             return true;
         }
-        return value.matches("^\\d{5}(-\\d{4})?$");
+        return value.matches("^\\d{3}[.\\s-]\\d{2}[.\\s-]\\d{4}$");
     }
 }

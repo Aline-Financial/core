@@ -1,6 +1,6 @@
 package com.aline.core.validation.annotations;
 
-import com.aline.core.validation.validators.AddressValidator;
+import com.aline.core.validation.validators.SocialSecurityValidator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -11,24 +11,18 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * <p>String must be a well-formed street address.</p>
+ * String must be a well-formed Social Security number.
  */
 @Target({ ElementType.METHOD, ElementType.FIELD, ElementType.ANNOTATION_TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = AddressValidator.class)
+@Constraint(validatedBy = SocialSecurityValidator.class)
 @Documented
-public @interface Address {
+public @interface SocialSecurity {
 
-    String message() default "Address is not valid.";
-    Type type() default Type.DEFAULT;
+    String message() default "${validatedValue} is not a valid Social Security number.";
 
     Class<?>[] groups() default {};
 
     Class<? extends Payload>[] payload() default {};
-
-    enum Type {
-        DEFAULT,
-        MAILING
-    }
 
 }
