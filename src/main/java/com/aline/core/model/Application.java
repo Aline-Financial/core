@@ -15,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 import java.util.Set;
 
 /**
@@ -47,7 +48,22 @@ public class Application {
      * </ul>
      */
     @ManyToOne(optional = false)
+    @NotNull(message = "Application type is required.")
     private ApplicationType applicationType;
+
+    /**
+     * Application status property
+     * <p>
+     *     Could be: <em>approved, denied, pending</em>
+     * </p>
+     */
+    @ManyToOne(optional = false)
+    @NotNull(message = "Application status is required.")
+    private ApplicationStatus applicationStatus;
+
+    @ManyToOne(optional = false)
+    @NotNull(message = "Primary applicant is required.")
+    private Applicant primaryApplicant;
 
     /**
      * Applicants that have applied under this application.
