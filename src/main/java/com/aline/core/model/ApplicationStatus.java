@@ -6,5 +6,4 @@ import javax.persistence.Entity;
 
 @Entity
 @NoArgsConstructor
-public class ApplicationStatus extends ValueType {
-}
+public class ApplicationStatus extends ValueType { }
