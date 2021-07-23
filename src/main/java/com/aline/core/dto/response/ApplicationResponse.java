@@ -22,7 +22,7 @@ public class ApplicationResponse {
      *     <li>Etc...</li>
      * </ul>
      */
-    private String applicationType;
+    private String type;
 
     /**
      * The primary applicant of the application
