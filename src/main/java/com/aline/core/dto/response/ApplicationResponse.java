@@ -11,6 +11,9 @@ import java.util.Set;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class ApplicationResponse {
 
+    /**
+     * Application ID
+     */
     private long id;
 
     /**
