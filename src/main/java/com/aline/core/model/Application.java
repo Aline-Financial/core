@@ -48,7 +48,7 @@ public class Application {
     private ApplicationType applicationType;
 
     /**
-     * Application status property
+     * Application Status
      * @see ApplicationStatus
      */
     @NotNull(message = "Application status is required.")
