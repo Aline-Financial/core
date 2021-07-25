@@ -1,9 +1,11 @@
 package com.aline.core.model;
 
-import lombok.NoArgsConstructor;
-
-import javax.persistence.Entity;
-
-@Entity
-@NoArgsConstructor
-public class ApplicationStatus extends ValueType { }
+/**
+ * Application Status
+ * <p>Enum of default application statuses.</p>
+ */
+public enum ApplicationStatus {
+    APPROVED,
+    DENIED,
+    PENDING
+}

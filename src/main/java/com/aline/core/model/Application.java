@@ -8,6 +8,8 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -39,26 +41,18 @@ public class Application {
 
     /**
      * Application Type
-     * <p>Can be either:</p>
-     * <ul>
-     *     <li>Checking</li>
-     *     <li>Savings</li>
-     *     <li>Credit Card</li>
-     *     <li>Loan</li>
-     * </ul>
+     * @see ApplicationType
      */
-    @ManyToOne(optional = false)
     @NotNull(message = "Application type is required.")
+    @Enumerated(EnumType.STRING)
     private ApplicationType applicationType;
 
     /**
      * Application status property
-     * <p>
-     *     Could be: <em>approved, denied, pending</em>
-     * </p>
+     * @see ApplicationStatus
      */
-    @ManyToOne(optional = false)
     @NotNull(message = "Application status is required.")
+    @Enumerated(EnumType.STRING)
     private ApplicationStatus applicationStatus;
 
     @ManyToOne(optional = false)
