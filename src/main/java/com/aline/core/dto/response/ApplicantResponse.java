@@ -1,6 +1,7 @@
 package com.aline.core.dto.response;
 
 import com.aline.core.model.Applicant;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,6 +10,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.LinkedHashSet;
 import java.util.Objects;
 
 /**
@@ -49,6 +51,9 @@ public class ApplicantResponse {
     private String mailingZipcode;
     private LocalDateTime lastModifiedAt;
     private LocalDateTime createdAt;
+
+    @JsonBackReference
+    private LinkedHashSet<ApplicantResponse> applications;
 
     @Override
     public boolean equals(Object o) {
