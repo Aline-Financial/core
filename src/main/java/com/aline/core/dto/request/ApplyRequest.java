@@ -4,12 +4,9 @@ import com.aline.core.model.ApplicationType;
 import lombok.Builder;
 import lombok.Data;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.Collection;
 import java.util.LinkedHashSet;
-import java.util.List;
 
 /**
  * DTO used to apply for an Account
