@@ -2,7 +2,6 @@ package com.aline.core.model;
 
 import com.aline.core.validation.annotations.Address;
 import com.aline.core.validation.annotations.DateOfBirth;
-import com.aline.core.validation.annotations.Gender;
 import com.aline.core.validation.annotations.Name;
 import com.aline.core.validation.annotations.PhoneNumber;
 import com.aline.core.validation.annotations.SocialSecurity;
@@ -19,6 +18,8 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -103,13 +104,13 @@ public class Applicant implements Serializable {
      *     <li>Male</li>
      *     <li>Female</li>
      *     <li>Other</li>
-     *     <li>Not Specified</li>
+     *     <li>Unspecified</li>
      * </ul>
+     * @see com.aline.core.model.Gender
      */
-    @Gender(message = "'${validatedValue}' is not an allowed value.")
-    @NotBlank(message = "Gender is required.")
     @NotNull
-    private String gender;
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
 
     /**
      * Email address

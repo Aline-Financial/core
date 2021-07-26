@@ -1,8 +1,8 @@
 package com.aline.core.dto.request;
 
+import com.aline.core.model.Gender;
 import com.aline.core.validation.annotations.Address;
 import com.aline.core.validation.annotations.DateOfBirth;
-import com.aline.core.validation.annotations.Gender;
 import com.aline.core.validation.annotations.Name;
 import com.aline.core.validation.annotations.PhoneNumber;
 import com.aline.core.validation.annotations.SocialSecurity;
@@ -70,20 +70,17 @@ public class UpdateApplicant implements Serializable {
 
     /**
      * Gender
-     * <p>
-     *     Validated by {@link Gender}
-     * </p>
      * <p>Must be one of the values:</p>
      * <ul>
      *     <li>Male</li>
      *     <li>Female</li>
      *     <li>Other</li>
-     *     <li>Not Specified</li>
+     *     <li>Unspecified</li>
      * </ul>
+     * @see Gender
      */
-    @Gender(message = "'${validatedValue}' is not a valid value.")
     @Nullable
-    private String gender;
+    private Gender gender;
 
     /**
      * Email

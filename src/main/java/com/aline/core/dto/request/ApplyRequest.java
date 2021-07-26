@@ -25,7 +25,7 @@ public class ApplyRequest {
      *     <em>ie. Checking, Savings, Checking & Savings, etc...</em>
      * </p>
      */
-    @NotBlank(message = "Application type is required.")
+    @NotNull(message = "Application type is required.")
     private ApplicationType applicationType;
 
     /**

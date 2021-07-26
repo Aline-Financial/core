@@ -1,14 +1,17 @@
 package com.aline.core.dto.request;
 
+import com.aline.core.model.Gender;
 import com.aline.core.validation.annotations.Address;
 import com.aline.core.validation.annotations.DateOfBirth;
-import com.aline.core.validation.annotations.Gender;
 import com.aline.core.validation.annotations.Name;
 import com.aline.core.validation.annotations.PhoneNumber;
 import com.aline.core.validation.annotations.SocialSecurity;
 import com.aline.core.validation.annotations.Zipcode;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.lang.Nullable;
 
 import javax.validation.constraints.Email;
@@ -17,6 +20,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Objects;
 
 /**
  * DTO to create an applicant
@@ -31,7 +35,10 @@ import java.time.LocalDate;
  *     <li>{@link Zipcode}</li>
  * </ul>
  */
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class CreateApplicant implements Serializable {
 
@@ -78,20 +85,18 @@ public class CreateApplicant implements Serializable {
 
     /**
      * Gender
-     * <p>
-     *     Validated by {@link Gender}
-     * </p>
      * <p>Must be one of the values:</p>
      * <ul>
      *     <li>Male</li>
      *     <li>Female</li>
      *     <li>Other</li>
-     *     <li>Not Specified</li>
+     *     <li>Unspecified</li>
      * </ul>
+     *
+     * @see Gender
      */
-    @Gender(message = "'${validatedValue}' is not a valid value.")
-    @NotBlank(message = "Gender is required.")
-    private String gender;
+    @NotNull(message = "Gender is required.")
+    private Gender gender;
 
     /**
      * Email
@@ -193,4 +198,16 @@ public class CreateApplicant implements Serializable {
     @NotBlank(message = "Mailing zipcode is required.")
     private String mailingZipcode;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CreateApplicant that = (CreateApplicant) o;
+        return email.equals(that.email) && phone.equals(that.phone) && socialSecurity.equals(that.socialSecurity) && driversLicense.equals(that.driversLicense);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(email, phone, socialSecurity, driversLicense);
+    }
 }
