@@ -1,5 +1,6 @@
 package com.aline.core.model;
 
+import com.aline.core.model.account.Account;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;

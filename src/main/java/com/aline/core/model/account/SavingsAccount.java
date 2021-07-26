@@ -1,4 +1,4 @@
-package com.aline.core.model;
+package com.aline.core.model.account;
 
 import lombok.Getter;
 import lombok.Setter;

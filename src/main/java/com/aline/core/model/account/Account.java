@@ -1,5 +1,6 @@
-package com.aline.core.model;
+package com.aline.core.model.account;
 
+import com.aline.core.model.Member;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.Setter;
@@ -7,6 +8,8 @@ import lombok.Setter;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -32,6 +35,15 @@ public class Account implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    /**
+     * Current account status.
+     * <p>
+     *     Specifies whether the account is active, not active, or another state.
+     * </p>
+     */
+    @Enumerated(EnumType.STRING)
+    private AccountStatus status;
 
     /**
      * Balance of the account.

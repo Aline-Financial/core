@@ -1,4 +1,4 @@
-package com.aline.core.model;
+package com.aline.core.model.account;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -6,6 +6,16 @@ import lombok.Setter;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
+/**
+ * Checking Account class.
+ * <p>
+ *     Derived from {@link Account}.
+ * </p>
+ * <p>
+ *     This class includes the available balance as well
+ *     as this is the main account for a member to spend from.
+ * </p>
+ */
 @Entity
 @Getter
 @Setter
