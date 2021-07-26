@@ -55,4 +55,11 @@ public class ApplicationResponse {
      */
     private String reason;
 
+    /**
+     * Is true if an account was successfully created in
+     * conjunction with the approving the application. It is
+     * false otherwise.
+     */
+    private boolean accountCreated;
+
 }
