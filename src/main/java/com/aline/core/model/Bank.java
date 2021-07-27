@@ -2,7 +2,11 @@ package com.aline.core.model;
 
 import com.aline.core.validation.annotations.Address;
 import com.aline.core.validation.annotations.Zipcode;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
