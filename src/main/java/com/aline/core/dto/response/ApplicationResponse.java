@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Data
 @Builder
@@ -56,10 +57,27 @@ public class ApplicationResponse {
     private String reason;
 
     /**
-     * Is true if an account was successfully created in
+     * Is true if accounts was successfully created in
      * conjunction with the approving the application. It is
      * false otherwise.
      */
-    private boolean accountCreated;
+    private boolean accountsCreated;
+
+    /**
+     * Account numbers that were created for this
+     * application.
+     */
+    private Set<Long> accountNumbers;
+
+    /**
+     * Is true if members were created in conjunction with the approving the application.
+     * It is false otherwise.
+     */
+    private boolean membersCreated;
+
+    /**
+     * Member IDs that were created for this application.
+     */
+    private Set<Long> memberIds;
 
 }

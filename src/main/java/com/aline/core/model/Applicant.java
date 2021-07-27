@@ -49,7 +49,6 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity
 @Builder
-@Inheritance(strategy = InheritanceType.JOINED)
 public class Applicant implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
