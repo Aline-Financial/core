@@ -2,11 +2,11 @@ package com.aline.core.model;
 
 import com.aline.core.validation.annotations.Address;
 import com.aline.core.validation.annotations.DateOfBirth;
-import com.aline.core.validation.annotations.Gender;
 import com.aline.core.validation.annotations.Name;
 import com.aline.core.validation.annotations.PhoneNumber;
 import com.aline.core.validation.annotations.SocialSecurity;
 import com.aline.core.validation.annotations.Zipcode;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -18,6 +18,8 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,6 +28,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -44,7 +47,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity
 @Builder
-public class Applicant {
+public class Applicant implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -101,13 +104,13 @@ public class Applicant {
      *     <li>Male</li>
      *     <li>Female</li>
      *     <li>Other</li>
-     *     <li>Not Specified</li>
+     *     <li>Unspecified</li>
      * </ul>
+     * @see com.aline.core.model.Gender
      */
-    @Gender(message = "'${validatedValue}' is not an allowed value.")
-    @NotBlank(message = "Gender is required.")
     @NotNull
-    private String gender;
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
 
     /**
      * Email address
@@ -266,6 +269,7 @@ public class Applicant {
      * Applications this applicant has applied under.
      */
     @ManyToMany(mappedBy = "applicants")
+    @JsonBackReference
     @ToString.Exclude
     private Set<Application> applications;
 

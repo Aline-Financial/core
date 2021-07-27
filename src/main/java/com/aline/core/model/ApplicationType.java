@@ -1,9 +1,13 @@
 package com.aline.core.model;
 
-import lombok.NoArgsConstructor;
-
-import javax.persistence.Entity;
-
-@Entity
-@NoArgsConstructor
-public class ApplicationType extends ValueType { }
+/**
+ * Application Type
+ * <p>Enum of default application types.</p>
+ */
+public enum ApplicationType {
+    CHECKING,
+    SAVINGS,
+    CHECKING_AND_SAVINGS,
+    CREDIT_CARD,
+    LOAN
+}

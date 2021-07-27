@@ -1,5 +1,6 @@
 package com.aline.core.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -8,6 +9,8 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -16,6 +19,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.Set;
 
 /**
@@ -31,7 +35,7 @@ import java.util.Set;
 @ToString
 @Builder
 @Entity
-public class Application {
+public class Application implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,26 +43,18 @@ public class Application {
 
     /**
      * Application Type
-     * <p>Can be either:</p>
-     * <ul>
-     *     <li>Checking</li>
-     *     <li>Savings</li>
-     *     <li>Credit Card</li>
-     *     <li>Loan</li>
-     * </ul>
+     * @see ApplicationType
      */
-    @ManyToOne(optional = false)
     @NotNull(message = "Application type is required.")
+    @Enumerated(EnumType.STRING)
     private ApplicationType applicationType;
 
     /**
-     * Application status property
-     * <p>
-     *     Could be: <em>approved, denied, pending</em>
-     * </p>
+     * Application Status
+     * @see ApplicationStatus
      */
-    @ManyToOne(optional = false)
     @NotNull(message = "Application status is required.")
+    @Enumerated(EnumType.STRING)
     private ApplicationStatus applicationStatus;
 
     @ManyToOne(optional = false)
@@ -67,6 +63,8 @@ public class Application {
 
     /**
      * Applicants that have applied under this application.
+     * This information will be ignored by serialization of the
+     * entity.
      */
     @ManyToMany
     @JoinTable(
@@ -75,5 +73,6 @@ public class Application {
             inverseJoinColumns = @JoinColumn(name = "applicant_id")
     )
     @ToString.Exclude
+    @JsonManagedReference
     private Set<Applicant> applicants;
 }

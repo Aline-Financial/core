@@ -1,13 +1,19 @@
 package com.aline.core.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class ApplicationResponse {
 
@@ -27,15 +33,12 @@ public class ApplicationResponse {
      */
     private String type;
 
-    /**
-     * The primary applicant of the application
-     */
-    private ApplicantResponse primaryApplicant;
 
     /**
      * All applicants that have applied under the referenced application
      */
-    private Set<ApplicantResponse> applicants;
+    @JsonManagedReference
+    private LinkedHashSet<ApplicantResponse> applicants;
 
     /**
      * Application Status
@@ -52,5 +55,29 @@ public class ApplicationResponse {
      * </p>
      */
     private String reason;
+
+    /**
+     * Is true if accounts was successfully created in
+     * conjunction with the approving the application. It is
+     * false otherwise.
+     */
+    private boolean accountsCreated;
+
+    /**
+     * Account numbers that were created for this
+     * application.
+     */
+    private Set<Long> accountNumbers;
+
+    /**
+     * Is true if members were created in conjunction with the approving the application.
+     * It is false otherwise.
+     */
+    private boolean membersCreated;
+
+    /**
+     * Member IDs that were created for this application.
+     */
+    private Set<Long> memberIds;
 
 }

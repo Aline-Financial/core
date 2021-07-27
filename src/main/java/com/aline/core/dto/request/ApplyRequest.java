@@ -1,12 +1,13 @@
 package com.aline.core.dto.request;
 
+import com.aline.core.model.ApplicationType;
 import lombok.Builder;
 import lombok.Data;
+import org.springframework.lang.Nullable;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.Collection;
+import java.util.LinkedHashSet;
 
 /**
  * DTO used to apply for an Account
@@ -22,13 +23,31 @@ public class ApplyRequest {
      *     <em>ie. Checking, Savings, Checking & Savings, etc...</em>
      * </p>
      */
-    @NotBlank(message = "Application type is required.")
-    private String applicationType;
+    @NotNull(message = "Application type is required.")
+    private ApplicationType applicationType;
+
+    /**
+     * If <code>noApplicants</code> is true, the
+     * applicants array will not be used to create
+     * new applicants. This means that the applicants
+     * have to be inserted manually for it to be submitted.
+     */
+    @Nullable
+    private Boolean noApplicants;
+
+    /**
+     * If <code>noApplicants</code> is set to true. It will use
+     * the <code>applicantIds</code> property to attach existing
+     * applicants to the application.
+     */
+    @Nullable
+    private LinkedHashSet<Long> applicantIds;
 
     /**
      * Applicants applying under this application.
+     * @apiNote Applicants must also include the the primary applicant.
+     *          The primary applicant is always the first one in the list.
      */
-    @NotNull(message = "Applicants list is required")
-    @Size(min = 1, max = 3, message = "There must be at least 1 applicant and at most ${max} applicants.")
-    private Collection<CreateApplicant> applicants;
+    @Size(max = 3, message = "There must be  at most ${max} applicants.")
+    private LinkedHashSet<CreateApplicant> applicants;
 }
