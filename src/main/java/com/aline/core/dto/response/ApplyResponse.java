@@ -12,12 +12,17 @@ import java.io.Serializable;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+/**
+ * ApplyResponse is a response DTO that is
+ * sent to a client after the application has
+ * been processed.
+ */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-public class ApplicationResponse implements Serializable {
+public class ApplyResponse implements Serializable {
 
     /**
      * Application ID
