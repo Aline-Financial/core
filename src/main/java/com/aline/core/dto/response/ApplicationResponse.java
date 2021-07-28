@@ -1,12 +1,12 @@
 package com.aline.core.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -15,7 +15,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-public class ApplicationResponse {
+public class ApplicationResponse implements Serializable {
 
     /**
      * Application ID
@@ -37,7 +37,6 @@ public class ApplicationResponse {
     /**
      * All applicants that have applied under the referenced application
      */
-    @JsonManagedReference
     private LinkedHashSet<ApplicantResponse> applicants;
 
     /**

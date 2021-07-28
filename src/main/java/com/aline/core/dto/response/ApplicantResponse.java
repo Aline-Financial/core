@@ -1,7 +1,7 @@
 package com.aline.core.dto.response;
 
 import com.aline.core.model.Applicant;
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -52,7 +52,7 @@ public class ApplicantResponse {
     private LocalDateTime lastModifiedAt;
     private LocalDateTime createdAt;
 
-    @JsonBackReference
+    @JsonIgnore
     private LinkedHashSet<ApplicantResponse> applications;
 
     @Override
