@@ -1,5 +1,7 @@
 package com.aline.core.dto.response;
 
+import com.aline.core.model.ApplicationStatus;
+import com.aline.core.model.ApplicationType;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -31,7 +33,7 @@ public class ApplicationResponse implements Serializable {
      *     <li>Etc...</li>
      * </ul>
      */
-    private String type;
+    private ApplicationType type;
 
 
     /**
@@ -45,7 +47,7 @@ public class ApplicationResponse implements Serializable {
      *     Could be: <em>approved, denied, pending</em>
      * </p>
      */
-    private String status;
+    private ApplicationStatus status;
 
     /**
      * The reason why and application was denied or pending.
