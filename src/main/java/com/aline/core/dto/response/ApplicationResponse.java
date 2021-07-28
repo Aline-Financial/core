@@ -38,7 +38,6 @@ public class ApplicationResponse implements Serializable {
     /**
      * All applicants that have applied under the referenced application
      */
-    @JsonManagedReference
     private LinkedHashSet<ApplicantResponse> applicants;
 
     /**
