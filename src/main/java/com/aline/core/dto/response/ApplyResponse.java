@@ -73,7 +73,7 @@ public class ApplyResponse implements Serializable {
      * Account numbers that were created for this
      * application.
      */
-    private Set<Long> accountNumbers;
+    private Set<ApplyAccountResponse> createdAccounts;
 
     /**
      * Is true if members were created in conjunction with the approving the application.
@@ -84,6 +84,6 @@ public class ApplyResponse implements Serializable {
     /**
      * Member IDs that were created for this application.
      */
-    private Set<Long> memberIds;
+    private Set<ApplyMemberResponse> createdMembers;
 
 }
