@@ -11,6 +11,15 @@ import javax.persistence.criteria.Root;
 import javax.persistence.metamodel.Attribute;
 import java.util.Arrays;
 
+/**
+ * The SearchSpecification class is used to return
+ * a specified list of elements based on the search term.
+ * The search term searches through all columns of the entity
+ * that are strings and if at least one term is matched in any
+ * of the string columns, it will return a list with that entity
+ * in it.
+ * @param <T> The entity type that a search is being applied to.
+ */
 @RequiredArgsConstructor
 public class SearchSpecification<T> implements Specification<T> {
 
