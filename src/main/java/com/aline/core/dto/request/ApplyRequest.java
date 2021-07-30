@@ -1,8 +1,10 @@
 package com.aline.core.dto.request;
 
 import com.aline.core.model.ApplicationType;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.lang.Nullable;
 
 import javax.validation.constraints.NotNull;
@@ -14,6 +16,8 @@ import java.util.LinkedHashSet;
  * @apiNote There must be at least 1 applicant in the collection of applicants.
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class ApplyRequest {
 
