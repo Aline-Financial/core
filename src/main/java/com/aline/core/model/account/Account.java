@@ -20,6 +20,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Set;
@@ -41,8 +42,13 @@ import java.util.Set;
 public class Account implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "account_generator")
+    @SequenceGenerator(name = "account_generator", sequenceName = "account_sequence")
     private Long id;
+
+
+
+    private String accountNumber;
 
     /**
      * Current account status.
