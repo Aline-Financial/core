@@ -14,6 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  * Bank Model
@@ -33,10 +34,11 @@ public class Bank {
     private Long id;
 
     /**
-     * Routing Id;
+     * Routing Number;
      */
     @NotNull
-    private Integer routingId;
+    @Size(min = 9, max = 9)
+    private Integer routingNumber;
 
     /**
      * Physical Address for Bank
