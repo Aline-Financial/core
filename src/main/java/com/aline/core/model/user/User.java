@@ -1,5 +1,7 @@
 package com.aline.core.model.user;
 
+import com.aline.core.validation.annotations.Password;
+import com.aline.core.validation.annotations.Username;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,6 +10,7 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.Hibernate;
 
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
@@ -36,11 +39,16 @@ public class User {
     private long id;
 
     @NotNull
+    @Username
     private String username;
 
     @NotNull
+    @Password
     private String password;
 
+    @Column(nullable=false, updatable=false, insertable=false)
+    private String role;
+    
     private boolean enabled;
 
     @Override
