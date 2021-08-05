@@ -1,6 +1,7 @@
 package com.aline.core.model;
 
 import com.aline.core.model.account.Account;
+import com.aline.core.validation.annotations.MembershipId;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,7 +16,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Set;
 
 @Entity
@@ -29,6 +34,13 @@ public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @ManyToOne(optional = false)
+    private Branch branch;
+
+    @NotNull
+    @MembershipId
+    private String membershipId;
 
     @OneToOne(optional = false)
     private Applicant applicant;
