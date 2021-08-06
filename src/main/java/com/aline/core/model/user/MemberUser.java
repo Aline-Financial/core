@@ -10,6 +10,7 @@ import lombok.experimental.SuperBuilder;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Getter
@@ -20,6 +21,7 @@ import javax.persistence.OneToOne;
 @DiscriminatorValue(UserRole.Roles.MEMBER)
 public class MemberUser extends User {
 
+    @NotNull
     @OneToOne
     private Member member;
 
