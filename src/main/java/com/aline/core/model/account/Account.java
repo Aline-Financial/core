@@ -1,6 +1,8 @@
 package com.aline.core.model.account;
 
+import com.aline.core.listener.CreateAccountListener;
 import com.aline.core.model.Member;
+import com.aline.core.validation.annotations.AccountNumber;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,9 +10,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
@@ -21,8 +26,10 @@ import javax.persistence.InheritanceType;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.lang.annotation.Annotation;
 import java.util.Set;
 
 /**
@@ -39,6 +46,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "account_type", discriminatorType = DiscriminatorType.STRING)
+@EntityListeners(CreateAccountListener.class)
 public class Account implements Serializable {
 
     @Id
@@ -46,8 +54,24 @@ public class Account implements Serializable {
     @SequenceGenerator(name = "account_generator", sequenceName = "account_sequence")
     private Long id;
 
-
-
+    /**
+     * Randomly generated account number.
+     * <p>
+     * <code>
+     * Account Number Schema:   <br/>
+     * ------------------------ <br/>
+     * xxx xxx xxxx             <br/>
+     *  |   |   |               <br/>
+     *  |   |   |__ RNG         <br/>
+     *  |   |                   <br/>
+     *  |   |__ Account Type    <br/>
+     *  |                       <br/>
+     *  |__ Branch Code         <br/>
+     * </code>
+     * </p>
+     */
+    @AccountNumber
+    @Column(unique = true)
     private String accountNumber;
 
     /**
@@ -77,5 +101,14 @@ public class Account implements Serializable {
     @ManyToMany(mappedBy = "accounts")
     @JsonBackReference
     private Set<Member> members;
+
+    @Transient
+    public AccountType getAccountType() {
+        DiscriminatorValue annotation = this.getClass().getAnnotation(DiscriminatorValue.class);
+        if (annotation != null) {
+            return AccountType.valueOf(annotation.value());
+        }
+        return null;
+    }
 
 }

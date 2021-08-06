@@ -47,7 +47,6 @@ public class Member {
     @ManyToOne(optional = false)
     private Branch branch;
 
-    @MembershipId
     @Column(unique = true)
     private String membershipId;
 

@@ -19,7 +19,7 @@ public class ApplyAccountResponse {
     /**
      * Account number that was created.
      */
-    private long accountNumber;
+    private String accountNumber;
 
     /**
      * Type of the account created.

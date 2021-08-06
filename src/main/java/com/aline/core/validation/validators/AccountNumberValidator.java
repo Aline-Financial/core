@@ -11,6 +11,6 @@ public class AccountNumberValidator implements ConstraintValidator<AccountNumber
         if (value == null)
             return true;
 
-        return value.matches("^[0-9]{8,12}");
+        return value.matches("^[0-9]{8,10}");
     }
 }
