@@ -1,6 +1,7 @@
 package com.aline.core.validation.validators;
 
 import com.aline.core.validation.annotations.AccountNumber;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
@@ -11,6 +12,12 @@ public class AccountNumberValidator implements ConstraintValidator<AccountNumber
         if (value == null)
             return true;
 
-        return value.matches("^[0-9]{8,10}");
+        boolean matchRegexPattern = value.matches("[0-9]{8,10}");
+        boolean accountTypeSegmentIsPalindrome = false;
+        if (matchRegexPattern) {
+            String accountTypeSegment = value.substring(value.length() - 7, value.length() - 4);
+            accountTypeSegmentIsPalindrome = StringUtils.reverse(accountTypeSegment).equals(accountTypeSegment);
+        }
+        return matchRegexPattern && accountTypeSegmentIsPalindrome;
     }
 }
