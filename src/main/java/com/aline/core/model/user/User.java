@@ -13,10 +13,12 @@ import org.hibernate.Hibernate;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
@@ -46,9 +48,20 @@ public class User {
     @Password
     private String password;
 
-    @Column(nullable=false, updatable=false, insertable=false)
-    private String role;
-    
+    /**
+     * Retrieves the role that is set
+     * in the {@link DiscriminatorValue} annotation.
+     * @return User role string or <code>null</code> if {@link DiscriminatorValue} annotation does not exist.
+     */
+    @Transient
+    public String getRole() {
+        DiscriminatorValue annotation = this.getClass().getAnnotation(DiscriminatorValue.class);
+        if (annotation != null) {
+            return annotation.value();
+        }
+        return null;
+    }
+
     private boolean enabled;
 
     @Override
