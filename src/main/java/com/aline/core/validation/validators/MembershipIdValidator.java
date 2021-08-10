@@ -2,7 +2,6 @@ package com.aline.core.validation.validators;
 
 
 import com.aline.core.validation.annotations.MembershipId;
-import org.apache.commons.lang3.StringUtils;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
