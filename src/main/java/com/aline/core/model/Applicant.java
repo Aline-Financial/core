@@ -1,5 +1,6 @@
 package com.aline.core.model;
 
+import com.aline.core.crypto.AttributeEncryptor;
 import com.aline.core.validation.annotations.Address;
 import com.aline.core.validation.annotations.DateOfBirth;
 import com.aline.core.validation.annotations.Name;
@@ -17,6 +18,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -145,6 +147,7 @@ public class Applicant implements Serializable {
      */
     @Column(unique = true)
     @NotBlank(message = "Social Security is required.")
+    @Convert(converter = AttributeEncryptor.class)
     @SocialSecurity
     @NotNull
     private String socialSecurity;

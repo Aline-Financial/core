@@ -29,7 +29,6 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.lang.annotation.Annotation;
 import java.util.Set;
 
 /**
