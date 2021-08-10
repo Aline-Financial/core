@@ -11,6 +11,6 @@ import javax.validation.constraints.NotNull;
 @SuperBuilder
 public class MemberUserRegistration extends UserRegistration {
 
-    @NotNull(message = "Member ID is required.")
-    private Long memberId;
+    @NotNull(message = "Membership ID is required.")
+    private String membershipId;
 }

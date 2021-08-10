@@ -56,19 +56,6 @@ public class Account implements Serializable {
 
     /**
      * Randomly generated account number.
-     * <p>
-     * <code>
-     * Account Number Schema:   <br/>
-     * ------------------------ <br/>
-     * xxx xxx xxxx             <br/>
-     *  |   |   |               <br/>
-     *  |   |   |__ RNG         <br/>
-     *  |   |                   <br/>
-     *  |   |__ Account Type    <br/>
-     *  |                       <br/>
-     *  |__ Branch Code         <br/>
-     * </code>
-     * </p>
      */
     @AccountNumber
     @Column(unique = true)
