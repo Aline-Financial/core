@@ -1,9 +1,6 @@
 package com.aline.core.repository;
 
 import com.aline.core.model.user.MemberUser;
-import com.aline.core.validation.annotations.Name;
-import com.aline.core.validation.annotations.SocialSecurity;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 

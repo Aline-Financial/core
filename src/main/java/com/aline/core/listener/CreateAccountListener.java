@@ -2,13 +2,13 @@ package com.aline.core.listener;
 
 import com.aline.core.model.Branch;
 import com.aline.core.model.Member;
+import com.aline.core.model.account.Account;
 import com.aline.core.model.account.AccountType;
 import com.aline.core.util.RandomNumberGenerator;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import com.aline.core.model.account.Account;
 
 import javax.persistence.PrePersist;
 
