@@ -19,7 +19,7 @@ public class ApplyMemberResponse {
     /**
      * Member ID that was created.
      */
-    private long id;
+    private String membershipId;
 
     /**
      * Name of the created member
