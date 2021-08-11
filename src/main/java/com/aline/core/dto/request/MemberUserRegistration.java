@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 /**
  * Registers a user with role MEMBER.
@@ -18,7 +19,7 @@ import javax.validation.constraints.NotNull;
 @JsonTypeName("member")
 @AllArgsConstructor
 @NoArgsConstructor
-public class MemberUserRegistration extends UserRegistration {
+public class MemberUserRegistration extends UserRegistration implements Serializable {
 
     @NotNull(message = "Membership ID is required.")
     private String membershipId;

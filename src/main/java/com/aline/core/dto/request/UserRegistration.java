@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
 
 /**
  * The UserRegistration abstract class is the
@@ -24,7 +25,7 @@ import javax.validation.constraints.NotBlank;
         @JsonSubTypes.Type(value = MemberUserRegistration.class, name = "member"),
         @JsonSubTypes.Type(value = AdminUserRegistration.class, name = "admin")
 })
-public abstract class UserRegistration {
+public abstract class UserRegistration implements Serializable {
 
     @NotBlank(message = "Username is required.")
     @Username

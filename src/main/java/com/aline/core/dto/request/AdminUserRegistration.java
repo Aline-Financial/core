@@ -10,6 +10,7 @@ import lombok.experimental.SuperBuilder;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
 
 /**
  * Registers a user with role ADMINISTRATOR.
@@ -20,7 +21,7 @@ import javax.validation.constraints.NotBlank;
 @JsonTypeName("admin")
 @AllArgsConstructor
 @NoArgsConstructor
-public class AdminUserRegistration extends UserRegistration {
+public class AdminUserRegistration extends UserRegistration implements Serializable {
 
     @Name
     @NotBlank(message = "First name is required.")
