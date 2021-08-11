@@ -20,4 +20,25 @@ public class ApplicationConfig {
      * Secret Key for encryption and decryption.
      */
     private String secretKey;
+
+    /**
+     * The API URL of the microservices.
+     * @apiNote The url has a {port} placeholder.
+     */
+    private String api;
+
+    /**
+     * The landing portal url.
+     */
+    private String landingPortal;
+
+    /**
+     * The member dashboard url.
+     */
+    private String memberDashboard;
+
+    /**
+     * The admin portal url.
+     */
+    private String adminPortal;
 }

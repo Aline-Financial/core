@@ -38,7 +38,6 @@ public class AttributeEncryptor implements AttributeConverter<String, String> {
     private final Cipher cipher;
 
     public AttributeEncryptor(ApplicationConfig config) throws NoSuchPaddingException, NoSuchAlgorithmException {
-        log.info(config.getSecretKey());
         key = new SecretKeySpec(config.getSecretKey().getBytes(), AES);
         cipher = Cipher.getInstance(AES);
     }
