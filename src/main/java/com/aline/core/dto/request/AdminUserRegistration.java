@@ -11,6 +11,9 @@ import lombok.experimental.SuperBuilder;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
+/**
+ * Registers a user with role ADMINISTRATOR.
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @SuperBuilder

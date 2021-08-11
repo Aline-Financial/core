@@ -11,6 +11,10 @@ import lombok.experimental.SuperBuilder;
 
 import javax.validation.constraints.NotBlank;
 
+/**
+ * The UserRegistration abstract class is the
+ * base class of any users with specific roles.
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

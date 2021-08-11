@@ -9,6 +9,9 @@ import lombok.experimental.SuperBuilder;
 
 import javax.validation.constraints.NotNull;
 
+/**
+ * Registers a user with role MEMBER.
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @SuperBuilder
