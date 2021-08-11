@@ -44,7 +44,6 @@ public class User {
     private String username;
 
     @NotNull
-    @Password
     private String password;
 
     /**
