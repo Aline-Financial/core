@@ -14,6 +14,6 @@ public class MembershipIdValidator implements ConstraintValidator<MembershipId, 
         if (value == null)
             return true;
 
-        return value.matches("^[0-9]{10}$");
+        return value.matches("^[0-9]{8}$");
     }
 }
