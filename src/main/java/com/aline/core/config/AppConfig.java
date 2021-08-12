@@ -14,12 +14,9 @@ import org.springframework.context.annotation.Configuration;
 @Getter
 @Setter
 @Configuration
-@ConfigurationProperties(prefix = "application")
-public class ApplicationConfig {
-    /**
-     * Secret Key for encryption and decryption.
-     */
-    private String secretKey;
+@ConfigurationProperties(prefix = "app")
+public class AppConfig {
+
 
     /**
      * The API URL of the microservices.
@@ -41,4 +38,37 @@ public class ApplicationConfig {
      * The admin portal url.
      */
     private String adminPortal;
+
+    /**
+     * Accessor for security properties
+     */
+    private final Security security = new Security();
+
+    /**
+     * Access for email properties
+     */
+    private final Email email = new Email();
+
+    @Getter
+    @Setter
+    public static class Email {
+        /**
+         * Enable email services
+         */
+        private boolean enable;
+
+        /**
+         * Email address to send emails from
+         */
+        private String from;
+    }
+
+    @Getter
+    @Setter
+    public static class Security {
+        /**
+         * Secret Key for encryption and decryption.
+         */
+        private String secretKey;
+    }
 }
