@@ -17,7 +17,8 @@ public interface MemberUserRepository extends IUserRepository<MemberUser> {
             "THEN TRUE " +
             "ELSE FALSE " +
             "END FROM MemberUser u INNER JOIN Member m " +
-            "WHERE m.id = u.member.id")
+            "ON u.member.id = m.id " +
+            "WHERE m.membershipId = ?1")
     boolean existsByMembershipId(String membershipId);
 
 }
