@@ -1,26 +1,17 @@
 package com.aline.core.aws.email;
 
-import com.aline.core.aws.config.AWSConfig;
 import com.aline.core.aws.config.AWSEmailConfig;
 import com.aline.core.config.AppConfig;
-import com.amazonaws.auth.AWSStaticCredentialsProvider;
-import com.amazonaws.regions.Regions;
-import com.amazonaws.services.simpleemail.AmazonSimpleEmailService;
-import com.amazonaws.services.simpleemail.AmazonSimpleEmailServiceClientBuilder;
 import com.amazonaws.services.simpleemailv2.AmazonSimpleEmailServiceV2;
-import com.amazonaws.services.simpleemailv2.AmazonSimpleEmailServiceV2ClientBuilder;
 import com.amazonaws.services.simpleemailv2.model.Body;
 import com.amazonaws.services.simpleemailv2.model.Content;
 import com.amazonaws.services.simpleemailv2.model.Destination;
 import com.amazonaws.services.simpleemailv2.model.EmailContent;
 import com.amazonaws.services.simpleemailv2.model.Message;
 import com.amazonaws.services.simpleemailv2.model.SendEmailRequest;
-import com.amazonaws.services.simpleemailv2.model.SendEmailResult;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -43,15 +34,37 @@ public class EmailService {
         fromEmail = appConfig.getEmail().getFrom();
     }
 
+    /**
+     * Send a simple test email.
+     * @param subject The subject of the email.
+     * @param body The plain text message.
+     * @param to Email address(es) to send this email to.
+     */
     public void sendEmail(String subject, String body, String... to) {
         log.info("Building email content: [subject={}, body={}, to={}, from={}]",
                 subject, body, Arrays.toString(to), fromEmail);
+        Content textBody = new Content().withData(body);
+        sendEmailHelper(subject, textBody, to);
+    }
+
+    /**
+     * Send an email with a custom content body.
+     * @param subject The subject of the email.
+     * @param content The content of the email.
+     * @param to The email address(es) to send this email to.
+     */
+    public void sendEmail(String subject, Content content, String... to) {
+        log.info("Building email content: [subject={}, body={}, to={}, from={}]",
+                subject, content.toString(), Arrays.toString(to), fromEmail);
+        sendEmailHelper(subject, content, to);
+    }
+
+    private void sendEmailHelper(String subject, Content content, String... to) {
+        Content emailSubject = new Content().withData(subject);
 
         Destination destination = new Destination().withToAddresses(to);
 
-        Content emailSubject = new Content().withData(subject);
-        Content textBody = new Content().withData(body);
-        Body emailBody = new Body().withHtml(textBody);
+        Body emailBody = new Body().withHtml(content);
 
         Message message = new Message()
                 .withSubject(emailSubject)
@@ -67,9 +80,8 @@ public class EmailService {
 
         log.info("Attempting to send email...");
 
-        SendEmailResult result = client.sendEmail(request);
-        log.info("Email successfully sent to: {}", Arrays.toString(to));
-        log.info("HTTP Data: {}", result.getSdkHttpMetadata());
+        client.sendEmail(request);
 
+        log.info("Email successfully sent to: {}", Arrays.toString(to));
     }
 }
