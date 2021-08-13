@@ -46,12 +46,12 @@ public class AWSConfig {
         /**
          * Access key ID provided by your AWS user
          */
-        private String accessKeyId;
+        private String accessKeyId = "";
 
         /**
          * Secret access key provided by your AWS user
          */
-        private String secretAccessKey;
+        private String secretAccessKey = "";
     }
 
 }
