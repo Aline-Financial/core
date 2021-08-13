@@ -2,6 +2,10 @@ package com.aline.core.aws.config;
 
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.regions.Regions;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -19,6 +23,17 @@ public class AWSConfig {
         String accessKeyId = this.getCredentials().getAccessKeyId();
         String secretAccessKey = this.getCredentials().getSecretAccessKey();
         return new AWSStaticCredentialsProvider(new BasicAWSCredentials(accessKeyId, secretAccessKey));
+    }
+
+    /**
+     * The default S3 client bean
+     */
+    @Bean
+    public AmazonS3 s3() {
+        return AmazonS3ClientBuilder.standard()
+                .withCredentials(credentialsProvider())
+                .withRegion(Regions.US_EAST_2)
+                .build();
     }
 
     /**

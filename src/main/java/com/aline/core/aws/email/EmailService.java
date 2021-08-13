@@ -2,26 +2,25 @@ package com.aline.core.aws.email;
 
 import com.aline.core.aws.config.AWSEmailConfig;
 import com.aline.core.config.AppConfig;
+import com.amazonaws.SdkClientException;
+import com.amazonaws.auth.AWSStaticCredentialsProvider;
+import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.simpleemailv2.AmazonSimpleEmailServiceV2;
 import com.amazonaws.services.simpleemailv2.model.Body;
 import com.amazonaws.services.simpleemailv2.model.Content;
 import com.amazonaws.services.simpleemailv2.model.Destination;
 import com.amazonaws.services.simpleemailv2.model.EmailContent;
 import com.amazonaws.services.simpleemailv2.model.Message;
+import com.amazonaws.services.simpleemailv2.model.NotFoundException;
 import com.amazonaws.services.simpleemailv2.model.SendEmailRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
 @Slf4j(topic = "Email Service")
@@ -29,9 +28,12 @@ import java.util.stream.Collectors;
 @ConditionalOnBean(AWSEmailConfig.class)
 public class EmailService {
 
+    private final AWSStaticCredentialsProvider credentialsProvider;
     private final AppConfig appConfig;
+    private final AWSEmailConfig emailConfig;
 
     private final AmazonSimpleEmailServiceV2 client;
+    private final AmazonS3 s3;
 
     private String fromEmail;
 
@@ -65,17 +67,10 @@ public class EmailService {
         sendEmailHelper(subject, content, to);
     }
 
-    public void sendHtmlEmail(String subject, String htmlFile, String to, Map<String, String> templateVariables) {
-        try {
-            ClassPathResource resource = new ClassPathResource(htmlFile);
-            InputStreamReader fileReader = new InputStreamReader(resource.getInputStream());
-            BufferedReader bufferedReader = new BufferedReader(fileReader);
-            final String[] htmlData = {bufferedReader.lines().collect(Collectors.joining())};
-            templateVariables.forEach((key, val) -> htmlData[0] = htmlData[0].replaceAll("\\{\\{" + key + "}}", val));
-            sendEmail(subject, htmlData[0], to);
-        } catch (IOException e) {
-            log.error("Could not read html template file: {}", htmlFile);
-        }
+    public void sendHtmlEmail(String subject, String templateName, String to, Map<String, String> templateVariables) {
+        String templateData = getEmailTemplateData(templateName);
+        String htmlData = interpolateStringVariables(templateData, templateVariables);
+        sendEmail(subject, htmlData, to);
     }
 
     private void sendEmailHelper(String subject, Content content, String... to) {
@@ -103,5 +98,38 @@ public class EmailService {
         client.sendEmail(request);
 
         log.info("Email successfully sent to: {}", Arrays.toString(to));
+    }
+
+    /**
+     * Retrieves an email template from the AWS S3 Bucket
+     * @param templateName The email template name.
+     * @return The email template as a string.
+     */
+    public String getEmailTemplateData(String templateName) {
+
+        String bucketName = emailConfig.getTemplateBucketName();
+        try {
+            return s3.getObjectAsString(bucketName, templateName);
+        } catch (SdkClientException e) {
+            log.error("Could not retrieve template from S3: {}", templateName);
+        } catch (IllegalArgumentException e) {
+            throw new NotFoundException(String.format("Template '%s' in bucket '%s' was not found.", templateName, bucketName));
+        }
+        return null;
+    }
+
+    /**
+     * Replaces template variables <em>(formatted as so: ${variable})</em> with
+     * the specified string value in a HashMap of string keys and string values.
+     * @param template The template to replace variables in.
+     * @param variables The HashMap of string keys and string values.
+     * @return A template with all the specified variables replaced.
+     */
+    public String interpolateStringVariables(String template, Map<String, String> variables) {
+        String[] atomicTemplate = {template};
+        variables.forEach((variable, value) -> {
+            atomicTemplate[0] = atomicTemplate[0].replaceAll("\\$\\{" + variable + "}", value);
+        });
+        return atomicTemplate[0];
     }
 }
