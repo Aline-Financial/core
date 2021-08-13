@@ -105,12 +105,10 @@ public class EmailService {
         String bucketName = emailConfig.getTemplateBucketName();
         try {
             return s3.getObjectAsString(bucketName, templateName);
-        } catch (SdkClientException e) {
-            log.error("Could not retrieve template from S3: {}", templateName);
-        } catch (IllegalArgumentException e) {
-            throw new NotFoundException(String.format("Template '%s' in bucket '%s' was not found.", templateName, bucketName));
+        } catch (SdkClientException | IllegalArgumentException e) {
+            log.error("Template '{}' was not found in bucket '{}'.", templateName, bucketName);
+            throw new NotFoundException("Could not find email template to send.");
         }
-        return null;
     }
 
     /**
