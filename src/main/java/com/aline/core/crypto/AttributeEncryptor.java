@@ -1,6 +1,6 @@
 package com.aline.core.crypto;
 
-import com.aline.core.config.ApplicationConfig;
+import com.aline.core.config.AppConfig;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.crypto.BadPaddingException;
@@ -37,8 +37,8 @@ public class AttributeEncryptor implements AttributeConverter<String, String> {
     private final Key key;
     private final Cipher cipher;
 
-    public AttributeEncryptor(ApplicationConfig config) throws NoSuchPaddingException, NoSuchAlgorithmException {
-        key = new SecretKeySpec(config.getSecretKey().getBytes(), AES);
+    public AttributeEncryptor(AppConfig config) throws NoSuchPaddingException, NoSuchAlgorithmException {
+        key = new SecretKeySpec(config.getSecurity().getSecretKey().getBytes(), AES);
         cipher = Cipher.getInstance(AES);
     }
 
