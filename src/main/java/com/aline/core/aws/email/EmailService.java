@@ -3,7 +3,6 @@ package com.aline.core.aws.email;
 import com.aline.core.aws.config.AWSEmailConfig;
 import com.aline.core.config.AppConfig;
 import com.amazonaws.SdkClientException;
-import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.simpleemailv2.AmazonSimpleEmailServiceV2;
 import com.amazonaws.services.simpleemailv2.model.Body;
