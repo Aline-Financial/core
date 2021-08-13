@@ -28,7 +28,6 @@ import java.util.Map;
 @ConditionalOnBean(AWSEmailConfig.class)
 public class EmailService {
 
-    private final AWSStaticCredentialsProvider credentialsProvider;
     private final AppConfig appConfig;
     private final AWSEmailConfig emailConfig;
 
@@ -49,8 +48,6 @@ public class EmailService {
      * @param to Email address(es) to send this email to.
      */
     public void sendEmail(String subject, String body, String... to) {
-        log.info("Building email content: [subject={}, body={}, to={}, from={}]",
-                subject, body, Arrays.toString(to), fromEmail);
         Content textBody = new Content().withData(body);
         sendEmailHelper(subject, textBody, to);
     }
@@ -62,8 +59,6 @@ public class EmailService {
      * @param to The email address(es) to send this email to.
      */
     public void sendEmail(String subject, Content content, String... to) {
-        log.info("Building email content: [subject={}, body={}, to={}, from={}]",
-                subject, content.toString(), Arrays.toString(to), fromEmail);
         sendEmailHelper(subject, content, to);
     }
 
