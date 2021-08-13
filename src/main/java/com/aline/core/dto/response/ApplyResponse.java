@@ -9,7 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -44,7 +44,7 @@ public class ApplyResponse implements Serializable {
     /**
      * All applicants that have applied under the referenced application
      */
-    private LinkedHashSet<ApplicantResponse> applicants;
+    private List<ApplicantResponse> applicants;
 
     /**
      * Application Status
@@ -84,6 +84,6 @@ public class ApplyResponse implements Serializable {
     /**
      * Member IDs that were created for this application.
      */
-    private Set<ApplyMemberResponse> createdMembers;
+    private List<ApplyMemberResponse> createdMembers;
 
 }

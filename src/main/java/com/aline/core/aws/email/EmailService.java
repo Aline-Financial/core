@@ -12,10 +12,16 @@ import com.amazonaws.services.simpleemailv2.model.SendEmailRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Arrays;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j(topic = "Email Service")
@@ -59,7 +65,21 @@ public class EmailService {
         sendEmailHelper(subject, content, to);
     }
 
+    public void sendHtmlEmail(String subject, String htmlFile, String to, Map<String, String> templateVariables) {
+        try {
+            ClassPathResource resource = new ClassPathResource(htmlFile);
+            InputStreamReader fileReader = new InputStreamReader(resource.getInputStream());
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            final String[] htmlData = {bufferedReader.lines().collect(Collectors.joining())};
+            templateVariables.forEach((key, val) -> htmlData[0] = htmlData[0].replaceAll("\\{\\{" + key + "}}", val));
+            sendEmail(subject, htmlData[0], to);
+        } catch (IOException e) {
+            log.error("Could not read html template file: {}", htmlFile);
+        }
+    }
+
     private void sendEmailHelper(String subject, Content content, String... to) {
+
         Content emailSubject = new Content().withData(subject);
 
         Destination destination = new Destination().withToAddresses(to);
