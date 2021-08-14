@@ -64,7 +64,6 @@ public class UserRegistrationToken {
     /**
      * The date and time this token was created.
      */
-    @NotNull(message = "Created date is required.")
     @CreationTimestamp
     private LocalDateTime created;
 
