@@ -1,11 +1,14 @@
 package com.aline.core.repository;
 
 import com.aline.core.model.user.User;
+import com.aline.core.model.user.UserRegistrationToken;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.NoRepositoryBean;
 
 import java.util.Optional;
+import java.util.UUID;
 
 /**
  * IUserRepository is to be inherited by
@@ -18,5 +21,10 @@ public interface IUserRepository<T extends User> extends JpaRepository<T, Long>,
     boolean existsByUsername(String username);
 
     Optional<T> findByUsername(String username);
+
+    @Query("SELECT u FROM User u INNER JOIN UserRegistrationToken ut " +
+            "ON u.id = ut.user.id " +
+            "WHERE ut = ?1")
+    Optional<T> findByToken(UserRegistrationToken token);
 
 }
