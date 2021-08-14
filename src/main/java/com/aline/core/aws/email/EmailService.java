@@ -2,6 +2,7 @@ package com.aline.core.aws.email;
 
 import com.aline.core.aws.config.AWSEmailConfig;
 import com.aline.core.config.AppConfig;
+import com.aline.core.exception.badgateway.EmailNotSentException;
 import com.amazonaws.SdkClientException;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.simpleemailv2.AmazonSimpleEmailServiceV2;
@@ -89,9 +90,13 @@ public class EmailService {
 
         log.info("Attempting to send email...");
 
-        client.sendEmail(request);
-
-        log.info("Email successfully sent to: {}", Arrays.toString(to));
+        try {
+            client.sendEmail(request);
+            log.info("Email successfully sent to: {}", Arrays.toString(to));
+        } catch (SdkClientException | IllegalArgumentException e) {
+            log.error("Email could not be sent. Reason: {}", e.getMessage());
+            throw new EmailNotSentException();
+        }
     }
 
     /**
