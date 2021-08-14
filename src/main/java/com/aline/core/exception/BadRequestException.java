@@ -9,7 +9,7 @@ import com.aline.core.exception.handler.GlobalExceptionHandler;
  *     <em>Extends <code>{@link RuntimeException}</code> to allow it to be caught by the {@link GlobalExceptionHandler}.</em>
  * </p>
  */
-public class BadRequestException extends RuntimeException {
+public class BadRequestException extends ResponseEntityException {
     public BadRequestException(String message) {
         super(message);
     }
