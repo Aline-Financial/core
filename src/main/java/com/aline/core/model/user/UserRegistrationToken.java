@@ -56,6 +56,12 @@ public class UserRegistrationToken {
     private User user;
 
     /**
+     * How long it takes until this token expires
+     * from its creation date in seconds.
+     */
+    private long expirationDelay;
+
+    /**
      * The date and time this token was created.
      */
     @NotNull(message = "Created date is required.")
@@ -87,8 +93,11 @@ public class UserRegistrationToken {
      */
     @Transient
     public LocalDateTime calculateExpirationDate(LocalDateTime created) {
+        // If expiration delay is not already set, set the default to 24 hours.
+        if (expirationDelay <= 0)
+            setExpirationDelay(86400);
         // Set expiration date to 24 hours plus the created date.
-        return created.plusHours(24);
+        return created.plusSeconds(getExpirationDelay());
     }
 
     /**
