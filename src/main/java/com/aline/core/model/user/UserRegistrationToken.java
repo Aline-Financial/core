@@ -92,8 +92,8 @@ public class UserRegistrationToken {
      */
     @Transient
     public LocalDateTime calculateExpirationDate(LocalDateTime created) {
-        // If expiration delay is not already set, set the default to 24 hours.
-        if (expirationDelay <= 0)
+        // If expiration delay is 0, less than 0, or more than 24 hours, set the default to 24 hours.
+        if (expirationDelay <= 0 || expirationDelay > 86400)
             setExpirationDelay(86400);
         // Set expiration date to 24 hours plus the created date.
         return created.plusSeconds(getExpirationDelay());
