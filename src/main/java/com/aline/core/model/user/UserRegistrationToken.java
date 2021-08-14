@@ -6,23 +6,26 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.id.UUIDGenerator;
-import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.PostPersist;
+import javax.persistence.PostUpdate;
 import javax.persistence.PrePersist;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
-import java.time.chrono.ChronoLocalDateTime;
 import java.util.Objects;
 import java.util.UUID;
 
+/**
+ * The User Registration Token entity is used to
+ * verify a user's registration. By default, the entity
+ * is set to expire 24 hours after it is created.
+ */
 @Getter
 @Setter
 @AllArgsConstructor
@@ -30,6 +33,13 @@ import java.util.UUID;
 @Entity
 public class UserRegistrationToken {
 
+    /**
+     * The primary key is a UUID token as the
+     * tokens do not need to be queried any other way
+     * but with the UUID. This provides an extra layer
+     * of difficulty to find users that aren't yet
+     * registered.
+     */
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name="UUID", strategy = "org.hibernate.id.UUIDGenerator")
@@ -37,28 +47,54 @@ public class UserRegistrationToken {
     @Column(updatable = false, nullable = false)
     private UUID token;
 
+    /**
+     * The user that this token is associated with.
+     * This relationship is defined as One-to-one.
+     */
     @NotNull(message = "A user is required.")
     @OneToOne
     private User user;
 
+    /**
+     * The date and time this token was created.
+     */
     @NotNull(message = "Created date is required.")
     @CreationTimestamp
     private LocalDateTime created;
 
+    /**
+     * The expiration date of the
+     */
     @Transient
     private LocalDateTime expiration;
 
-    @PrePersist
+    /**
+     * Set the expiration date of the token after
+     * it is persisted and/or updated.
+     */
+    @PostPersist
+    @PostUpdate
     public void setExpirationDate() {
         setExpiration(calculateExpirationDate(created));
     }
 
+    /**
+     * Calculates the expiration date from a passed
+     * created date time.
+     * @param created The created date time.
+     * @return A local date time that represents the expiration date relative
+     * to the created date.
+     */
     @Transient
     public LocalDateTime calculateExpirationDate(LocalDateTime created) {
         // Set expiration date to 24 hours plus the created date.
         return created.plusHours(24);
     }
 
+    /**
+     * A transient method to check if the token is expired.
+     * @return  A boolean representing the expiration status of the token.
+     */
     @Transient
     public boolean isExpired() {
         LocalDateTime now = LocalDateTime.now();
