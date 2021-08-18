@@ -8,7 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.NoRepositoryBean;
 
 import java.util.Optional;
-import java.util.UUID;
 
 /**
  * IUserRepository is to be inherited by

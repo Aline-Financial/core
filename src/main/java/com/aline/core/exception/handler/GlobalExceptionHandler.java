@@ -2,8 +2,8 @@ package com.aline.core.exception.handler;
 
 import com.aline.core.exception.BadRequestException;
 import com.aline.core.exception.ConflictException;
-import com.aline.core.exception.UnprocessableException;
 import com.aline.core.exception.NotFoundException;
+import com.aline.core.exception.UnprocessableException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
