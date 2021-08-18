@@ -3,6 +3,7 @@ package com.aline.core.exception.handler;
 import com.aline.core.exception.BadRequestException;
 import com.aline.core.exception.ConflictException;
 import com.aline.core.exception.NotFoundException;
+import com.aline.core.exception.UnprocessableException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -25,7 +26,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<String> handleNotFoundException(Exception e) {
-        log.error(e.toString());
+        log.error("404 Not Found: {}", e.toString());
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
                 .body(e.getMessage());
@@ -33,17 +34,25 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(BadRequestException.class)
     public ResponseEntity<String> handleBadRequestException(Exception e) {
-        log.error(e.toString());
+        log.error("400 Bad Request: {}", e.toString());
         return ResponseEntity
                 .badRequest()
                 .body(e.getMessage());
     }
 
     @ExceptionHandler(ConflictException.class)
-    public ResponseEntity<String> handleConflictExceptions(Exception e) {
-        log.error(e.toString());
+    public ResponseEntity<String> handleConflictException(Exception e) {
+        log.error("409 Conflict: {}", e.toString());
         return ResponseEntity
                 .status(HttpStatus.CONFLICT)
+                .body(e.getMessage());
+    }
+
+    @ExceptionHandler(UnprocessableException.class)
+    public ResponseEntity<String> handleNotCreatedException(Exception e) {
+        log.error("422 Unprocessable Entity: {}", e.toString());
+        return ResponseEntity
+                .status(HttpStatus.UNPROCESSABLE_ENTITY)
                 .body(e.getMessage());
     }
 

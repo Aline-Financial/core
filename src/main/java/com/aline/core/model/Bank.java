@@ -38,7 +38,7 @@ public class Bank {
      */
     @NotNull
     @Size(min = 9, max = 9)
-    private Integer routingNumber;
+    private String routingNumber;
 
     /**
      * Physical Address for Bank
