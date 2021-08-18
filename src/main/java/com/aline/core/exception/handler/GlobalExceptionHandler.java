@@ -2,7 +2,7 @@ package com.aline.core.exception.handler;
 
 import com.aline.core.exception.BadRequestException;
 import com.aline.core.exception.ConflictException;
-import com.aline.core.exception.NotCreatedException;
+import com.aline.core.exception.UnprocessableException;
 import com.aline.core.exception.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
@@ -48,7 +48,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 .body(e.getMessage());
     }
 
-    @ExceptionHandler(NotCreatedException.class)
+    @ExceptionHandler(UnprocessableException.class)
     public ResponseEntity<String> handleNotCreatedException(Exception e) {
         log.error("422 Unprocessable Entity: {}", e.toString());
         return ResponseEntity
