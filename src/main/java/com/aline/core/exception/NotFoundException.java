@@ -9,7 +9,7 @@ import com.aline.core.exception.handler.GlobalExceptionHandler;
  *     <em>Extends <code>{@link RuntimeException}</code> to allow it to be caught by the {@link GlobalExceptionHandler}.</em>
  * </p>
  */
-public class NotFoundException extends RuntimeException {
+public class NotFoundException extends ResponseEntityException {
     public NotFoundException(String message) {
         super(message);
     }

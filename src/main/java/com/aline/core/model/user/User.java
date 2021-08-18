@@ -19,6 +19,7 @@ import javax.persistence.Id;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  *  User Entity
@@ -53,10 +54,16 @@ public class User {
     @Transient
     public String getRole() {
         DiscriminatorValue annotation = this.getClass().getAnnotation(DiscriminatorValue.class);
-        if (annotation != null) {
-            return annotation.value();
-        }
-        return null;
+        return Optional.of(annotation.value()).orElse(null);
+    }
+
+    /**
+     * Retrieves the role that is set in the {@link DiscriminatorValue} annotation.
+     * @return UserRole enum value or <code>null</code> if {@link DiscriminatorValue} does not exist.
+     */
+    @Transient
+    public UserRole getUserRole() {
+        return Optional.of(UserRole.valueOf(getRole())).orElse(null);
     }
 
     private boolean enabled;

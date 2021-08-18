@@ -12,7 +12,7 @@ import com.aline.core.exception.handler.GlobalExceptionHandler;
  *     <em>Extends <code>{@link RuntimeException}</code> to allow it to be caught by the {@link GlobalExceptionHandler}.</em>
  * </p>
  */
-public class ConflictException extends RuntimeException {
+public class ConflictException extends ResponseEntityException {
     public ConflictException(String message) {
         super(message);
     }
