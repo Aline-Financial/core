@@ -11,6 +11,6 @@ public class UsernameValidator implements ConstraintValidator<Username, String> 
         if (value == null)
             return true;
 
-        return value.matches("^(?=.{6,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$");
+        return value.matches("^(?=.{6,20}$)(?![_.0-9])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$");
     }
 }
