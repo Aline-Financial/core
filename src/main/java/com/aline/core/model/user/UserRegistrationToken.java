@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -44,6 +45,7 @@ public class UserRegistrationToken {
     @GenericGenerator(name="UUID", strategy = "org.hibernate.id.UUIDGenerator")
     @NotNull(message = "A token is required.")
     @Column(updatable = false, nullable = false)
+    @Type(type = "uuid-char")
     private UUID token;
 
     /**
