@@ -6,3 +6,25 @@ INSERT IGNORE INTO branch (id, name, phone, address, city, state, zipcode, bank_
 VALUES (1, 'Main Branch', '(800) 123-4567', '123 Aline Financial St.', 'New York', 'New York', '10001', 1);
 
 
+/*********************************************************************
+******************* USAGE WITH YOUR PROJECT **************************
+**********************************************************************
+ */
+
+/*********************************************************************
+*   Make sure to include the following property in your
+*   application.yml / application.properties file:
+*
+*   *Properties*
+*   spring.datasource.initialization-mode=always
+*
+*   *YAML*
+*   spring:
+*       datasource:
+*           initialization-mode=always
+**********************************************************************
+*   This will make sure your project will initialize the database
+*   if it has not already been initialized.
+**********************************************************************
+ */
+

@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
@@ -14,7 +15,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.PostPersist;
-import javax.persistence.PostUpdate;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
@@ -31,6 +31,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Slf4j(topic = "User Registration Token")
 public class UserRegistrationToken {
 
     /**
@@ -79,8 +80,8 @@ public class UserRegistrationToken {
      * it is persisted and/or updated.
      */
     @PostPersist
-    @PostUpdate
     public void setExpirationDate() {
+        log.info("Set expiration date to {}", calculateExpirationDate(created));
         setExpiration(calculateExpirationDate(created));
     }
 
