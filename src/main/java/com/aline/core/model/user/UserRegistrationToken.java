@@ -4,14 +4,18 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.PostLoad;
 import javax.persistence.PostPersist;
 import javax.persistence.PostUpdate;
 import javax.persistence.Transient;
@@ -27,9 +31,11 @@ import java.util.UUID;
  */
 @Getter
 @Setter
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Slf4j(topic = "User Registration Token")
 public class UserRegistrationToken {
 
     /**
@@ -44,6 +50,7 @@ public class UserRegistrationToken {
     @GenericGenerator(name="UUID", strategy = "org.hibernate.id.UUIDGenerator")
     @NotNull(message = "A token is required.")
     @Column(updatable = false, nullable = false)
+    @Type(type = "uuid-char")
     private UUID token;
 
     /**
@@ -77,8 +84,10 @@ public class UserRegistrationToken {
      * it is persisted and/or updated.
      */
     @PostPersist
+    @PostLoad
     @PostUpdate
     public void setExpirationDate() {
+        log.info("Set expiration date to {}", calculateExpirationDate(created));
         setExpiration(calculateExpirationDate(created));
     }
 
