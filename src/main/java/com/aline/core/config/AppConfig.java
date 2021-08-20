@@ -45,9 +45,14 @@ public class AppConfig {
     private final Security security = new Security();
 
     /**
-     * Access for email properties
+     * Accessor for email properties
      */
     private final Email email = new Email();
+
+    /**
+     * Accessor for SMS properties
+     */
+    private final SMS sms = new SMS();
 
     @Getter
     @Setter
@@ -71,10 +76,6 @@ public class AppConfig {
          * Enable SMS services
          */
         private boolean enable;
-
-        /**
-         * 
-         */
 
     }
 
