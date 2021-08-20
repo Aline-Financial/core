@@ -1,5 +1,6 @@
 package com.aline.core.repository;
 
+import com.aline.core.model.OneTimePasscode;
 import com.aline.core.model.user.User;
 import com.aline.core.model.user.UserRegistrationToken;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -25,5 +26,10 @@ public interface IUserRepository<T extends User> extends JpaRepository<T, Long>,
             "ON u.id = ut.user.id " +
             "WHERE ut = ?1")
     Optional<T> findByToken(UserRegistrationToken token);
+
+    @Query("SELECT u FROM User u INNER JOIN OneTimePasscode otp " +
+            "ON u.id = otp.user.id " +
+            "WHERE otp.otp = ?1")
+    Optional<T> findByOneTimePasscode(String token);
 
 }
