@@ -65,6 +65,21 @@ public class AppConfig {
 
     @Getter
     @Setter
+    public static class SMS {
+
+        /**
+         * Enable SMS services
+         */
+        private boolean enable;
+
+        /**
+         * 
+         */
+
+    }
+
+    @Getter
+    @Setter
     public static class Security {
         /**
          * Secret Key for encryption and decryption.
