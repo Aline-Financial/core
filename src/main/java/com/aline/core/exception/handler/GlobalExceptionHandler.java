@@ -4,7 +4,7 @@ import com.aline.core.exception.BadRequestException;
 import com.aline.core.exception.ConflictException;
 import com.aline.core.exception.NotFoundException;
 import com.aline.core.exception.ResponseEntityException;
-import com.aline.core.exception.UnauthorizedException;
+import com.aline.core.exception.ForbiddenException;
 import com.aline.core.exception.UnprocessableException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
@@ -58,9 +58,9 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 .body(e.getMessage());
     }
 
-    @ExceptionHandler(UnauthorizedException.class)
+    @ExceptionHandler(ForbiddenException.class)
     public ResponseEntity<String> handleUnauthorizedException(ResponseEntityException e) {
-        log.error("403 Not authorized (Forbidden): {}", e.getMessage());
+        log.error("403 Forbidden: {}", e.getMessage());
         return ResponseEntity
                 .status(HttpStatus.FORBIDDEN)
                 .body(e.getMessage());
