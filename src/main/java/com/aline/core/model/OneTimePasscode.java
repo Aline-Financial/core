@@ -2,6 +2,7 @@ package com.aline.core.model;
 
 import com.aline.core.model.user.User;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,6 +19,7 @@ import javax.persistence.SequenceGenerator;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Builder
 public class OneTimePasscode {
 
     @Id

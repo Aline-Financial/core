@@ -1,6 +1,8 @@
 package com.aline.core.aws.sms;
 
 import com.aline.core.aws.config.AWSSMSConfig;
+import com.aline.core.exception.UnprocessableException;
+import com.amazonaws.SdkClientException;
 import com.amazonaws.services.sns.AmazonSNS;
 import com.amazonaws.services.sns.model.MessageAttributeValue;
 import com.amazonaws.services.sns.model.PublishRequest;
@@ -50,9 +52,15 @@ public class SMSService {
                 .withPhoneNumber("+1 " + phoneNumber)
                 .withMessage(message)
                 .withMessageAttributes(messageAttributes);
-        log.info("Attempting to send SMS message...");
-        snsClient.publish(publishRequest);
-        log.info("Successfully sent SMS message...");
+        try {
+            log.info("Attempting to send SMS message...");
+            snsClient.publish(publishRequest);
+            log.info("Successfully sent SMS message...");
+        } catch (SdkClientException | IllegalArgumentException e) {
+            log.error("Something went wrong with sending your SMS message.");
+            e.printStackTrace();
+            throw new UnprocessableException("Something went wrong with sending an SMS message.");
+        }
     }
 
 }

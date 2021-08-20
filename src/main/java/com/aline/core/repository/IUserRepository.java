@@ -29,7 +29,7 @@ public interface IUserRepository<T extends User> extends JpaRepository<T, Long>,
 
     @Query("SELECT u FROM User u INNER JOIN OneTimePasscode otp " +
             "ON u.id = otp.user.id " +
-            "WHERE otp.otp = ?1")
-    Optional<T> findByOneTimePasscode(String token);
+            "WHERE otp = ?1")
+    Optional<T> findByOneTimePasscode(OneTimePasscode token);
 
 }
