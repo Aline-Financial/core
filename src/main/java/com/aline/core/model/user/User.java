@@ -63,7 +63,7 @@ public class User {
      */
     @Transient
     public UserRole getUserRole() {
-        return Optional.of(UserRole.valueOf(getRole())).orElse(null);
+        return Optional.of(UserRole.valueOf(getRole().toUpperCase())).orElse(null);
     }
 
     private boolean enabled;
