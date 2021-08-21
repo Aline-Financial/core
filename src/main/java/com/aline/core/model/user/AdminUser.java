@@ -1,6 +1,7 @@
 package com.aline.core.model.user;
 
 import com.aline.core.validation.annotations.Name;
+import com.aline.core.validation.annotations.PhoneNumber;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,6 +34,10 @@ public class AdminUser extends User {
     @NotNull
     @Email(message = "'${validatedValue}' is not a valid email.")
     private String email;
+
+    @NotNull
+    @PhoneNumber
+    private String phone;
 
     @PrePersist
     public void postPersist() {
