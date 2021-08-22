@@ -33,7 +33,7 @@ public class SMSService {
      * @param type The SMSType (Transactional, Promotional)
      */
     public void sendSMSMessage(String phoneNumber, String message, SMSType type) {
-        log.info("Building SMS Message [Phone number: {}, Message: {}, Type: {}]",
+        log.debug("Building SMS Message [Phone number: {}, Message: {}, Type: {}]",
                 phoneNumber, message, type.getType());
         Map<String, MessageAttributeValue> messageAttributes = new HashMap<>();
         messageAttributes.put("AWS.SNS.SMS.SenderID",
@@ -53,9 +53,9 @@ public class SMSService {
                 .withMessage(message)
                 .withMessageAttributes(messageAttributes);
         try {
-            log.info("Attempting to send SMS message...");
+            log.debug("Attempting to send SMS message...");
             snsClient.publish(publishRequest);
-            log.info("Successfully sent SMS message...");
+            log.debug("Successfully sent SMS message...");
         } catch (SdkClientException | IllegalArgumentException e) {
             log.error("Something went wrong with sending your SMS message.");
             e.printStackTrace();

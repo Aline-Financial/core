@@ -154,12 +154,25 @@ public class EmailService {
         return atomicTemplate[0];
     }
 
+    /**
+     * Interpolate string variables while reading through
+     * the buffered reader data stream.
+     * @param bufferedReader The buffered reader to read from.
+     * @param variables The Hashmap of string variables/
+     * @return A string now with replaced placeholders.
+     */
     public String interpolateStringVariables(BufferedReader bufferedReader, Map<String, String> variables) {
         return bufferedReader.lines()
                 .map(line -> interpolateVariablesInLine(line, variables))
                 .collect(Collectors.joining());
     }
 
+    /**
+     * Interpolate variables in a single line.
+     * @param line The line to replace placeholders with variables.
+     * @param variables The variables to replace the placeholders with.
+     * @return A string with replaced placeholders.
+     */
     public String interpolateVariablesInLine(String line, Map<String, String> variables) {
         Pattern pattern = Pattern.compile("\\$\\{[A-Za-z0-9]*}");
         Matcher matcher = pattern.matcher(line);

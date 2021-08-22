@@ -1,12 +1,12 @@
 package com.aline.core.dto.request;
 
-import com.aline.core.validation.annotations.MembershipId;
+import com.aline.core.dto.response.ContactMethod;
 import com.aline.core.validation.annotations.SocialSecurity;
 import com.aline.core.validation.annotations.Username;
 import lombok.Builder;
 import lombok.Data;
 
-import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
 
 @Data
 @Builder
@@ -20,10 +20,9 @@ public class ResetPasswordAuthentication {
     private String username;
 
     /**
-     * The email of the user requesting
-     * a password reset
+     * The contact method selected by the user.
      */
-    @Email
-    private String email;
+    @NotNull
+    private ContactMethod contactMethod;
 
 }
