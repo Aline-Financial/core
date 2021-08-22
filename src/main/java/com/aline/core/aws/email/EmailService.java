@@ -19,8 +19,15 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.Map;
+import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j(topic = "Email Service")
@@ -63,8 +70,9 @@ public class EmailService {
     }
 
     public void sendHtmlEmail(String subject, String templateName, String to, Map<String, String> templateVariables) {
-        String templateData = getEmailTemplateData(templateName);
-        String htmlData = interpolateStringVariables(templateData, templateVariables);
+        InputStream templateData = getEmailTemplateInputStream(templateName);
+        BufferedReader br = new BufferedReader(new InputStreamReader(templateData));
+        String htmlData = interpolateStringVariables(br, templateVariables);
         sendEmail(subject, htmlData, to);
     }
 
@@ -116,6 +124,22 @@ public class EmailService {
     }
 
     /**
+     * Retrieves the input stream of the email
+     * template from S3.
+     * @param templateName The template name.
+     * @return An input stream of the template contents.
+     */
+    public InputStream getEmailTemplateInputStream(String templateName) {
+        String bucketName = emailConfig.getTemplateBucketName();
+        try {
+            return s3.getObject(bucketName, templateName).getObjectContent();
+        } catch (SdkClientException | IllegalArgumentException e) {
+            log.error("Template '{}' was not found in bucket '{}'.", templateName, bucketName);
+            throw new NotFoundException("Could not find email template to send.");
+        }
+    }
+
+    /**
      * Replaces template variables <em>(formatted as so: ${variable})</em> with
      * the specified string value in a HashMap of string keys and string values.
      * @param template The template to replace variables in.
@@ -128,5 +152,35 @@ public class EmailService {
             atomicTemplate[0] = atomicTemplate[0].replaceAll("\\$\\{" + variable + "}", value);
         });
         return atomicTemplate[0];
+    }
+
+    public String interpolateStringVariables(BufferedReader bufferedReader, Map<String, String> variables) {
+        return bufferedReader.lines()
+                .map(line -> interpolateVariablesInLine(line, variables))
+                .collect(Collectors.joining());
+    }
+
+    public String interpolateVariablesInLine(String line, Map<String, String> variables) {
+        Pattern pattern = Pattern.compile("\\$\\{[A-Za-z0-9]*}");
+        Matcher matcher = pattern.matcher(line);
+        StringBuffer sb = new StringBuffer();
+        while (matcher.find()) {
+            String varPlaceholder = matcher.group();
+            log.info(varPlaceholder);
+            Pattern varNamePattern = Pattern.compile("(?<=\\$\\{)[A-Za-z0-9]*(?=})");
+            Matcher varNameMatcher = varNamePattern.matcher(varPlaceholder);
+            String varName = "";
+            if (varNameMatcher.find()) {
+                varName = varNameMatcher.group();
+                log.info(varName);
+            }
+
+            if (variables.containsKey(varName)) {
+                String var = variables.get(varName);
+                matcher.appendReplacement(sb, var);
+            }
+        }
+        matcher.appendTail(sb);
+        return sb.toString();
     }
 }
