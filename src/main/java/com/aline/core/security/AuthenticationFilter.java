@@ -4,6 +4,8 @@ import com.aline.core.config.AppConfig;
 import com.aline.core.dto.request.AuthenticationRequest;
 import com.aline.core.exception.ForbiddenException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,6 +21,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 
 @Component
 @RequiredArgsConstructor
@@ -28,6 +33,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private final AppConfig appConfig;
     private final SecretKey jwtSecretKey;
     private final ObjectMapper objectMapper;
+    private final AppConfig.Security.JWT jwtConfig = appConfig.getSecurity().getJwt();
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
@@ -48,6 +54,25 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
-        super.successfulAuthentication(request, response, chain, authResult);
+
+        int expireAfterDays = jwtConfig.getTokenExpirationAfterDays();
+
+        String token = Jwts.builder()
+                .setSubject(authResult.getName())
+                .claim("authorities", authResult.getAuthorities())
+                .setIssuedAt(Date.from(LocalDate.now()
+                        .atStartOfDay(ZoneId.systemDefault())
+                        .toInstant()))
+                .setExpiration(Date.from(LocalDate.now()
+                        .plusDays(expireAfterDays)
+                        .atStartOfDay(ZoneId.systemDefault())
+                        .toInstant()))
+                .signWith(jwtSecretKey, SignatureAlgorithm.HS512)
+                .compact();
+
+        String tokenStr = jwtConfig.getTokenPrefix() + token;
+
+        response.setHeader(jwtConfig.getAuthorizationHeader(), tokenStr);
+
     }
 }
