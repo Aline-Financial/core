@@ -21,5 +21,5 @@ public interface OneTimePasscodeRepository extends JpaRepository<OneTimePasscode
     @Query("DELETE FROM OneTimePasscode u WHERE u.user.id = ?1")
     void deleteByUserId(long id);
 
-    Optional<OneTimePasscode> findByOtpAndUserUsername(String otp, String username);
+    Optional<OneTimePasscode> findByUserUsername(String username);
 }
