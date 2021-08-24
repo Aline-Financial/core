@@ -32,15 +32,20 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 
+@Component
 @Slf4j(topic = "Authentication Filter")
 @RequiredArgsConstructor
 public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
-    private final AuthenticationManager authenticationManager;
     private final JwtConfig jwtConfig;
     private final SecretKey jwtSecretKey;
     private final ObjectMapper objectMapper;
 
+    @Override
+    @Autowired
+    public void setAuthenticationManager(AuthenticationManager authenticationManager) {
+        super.setAuthenticationManager(authenticationManager);
+    }
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
@@ -53,7 +58,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
             val authentication = new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword());
 
-            return authenticationManager.authenticate(authentication);
+            return getAuthenticationManager().authenticate(authentication);
 
         } catch (IOException e) {
             e.printStackTrace();
