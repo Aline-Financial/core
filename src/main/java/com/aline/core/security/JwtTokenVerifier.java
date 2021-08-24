@@ -1,10 +1,12 @@
 package com.aline.core.security;
 
 import com.aline.core.config.AppConfig;
+import com.aline.core.security.config.JwtConfig;
 import com.aline.core.security.model.JwtToken;
 import io.jsonwebtoken.JwtException;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.util.Strings;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -20,27 +22,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Collections;
+import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
 public class JwtTokenVerifier extends OncePerRequestFilter {
 
-    private final AppConfig appConfig;
+    private final JwtConfig jwtConfig;
     private final SecretKey secretKey;
 
-    private AppConfig.Security.JWT jwtConfig;
-
-    @PostConstruct
-    public void init() {
-        jwtConfig = appConfig.getSecurity().getJwt();
-    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         // Get token from header
-        String authorizationHeader = request.getHeader(jwtConfig.getAuthorizationHeader());
+        String authorizationHeader = Optional.ofNullable(request.getHeader(HttpHeaders.AUTHORIZATION))
+                .orElse("");
 
-        if (Strings.isNotBlank(authorizationHeader) || !authorizationHeader.startsWith(jwtConfig.getTokenPrefix())) {
+        if (Strings.isBlank(authorizationHeader) || !authorizationHeader.startsWith(HttpHeaders.AUTHORIZATION)) {
             filterChain.doFilter(request, response);
             return;
         }

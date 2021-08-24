@@ -3,11 +3,15 @@ package com.aline.core.security;
 import com.aline.core.config.AppConfig;
 import com.aline.core.dto.request.AuthenticationRequest;
 import com.aline.core.exception.ForbiddenException;
+import com.aline.core.security.config.JwtConfig;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import lombok.val;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -28,28 +32,24 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 
-@Component
+@Slf4j(topic = "Authentication Filter")
 @RequiredArgsConstructor
 public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     private final AuthenticationManager authenticationManager;
-    private final AppConfig appConfig;
+    private final JwtConfig jwtConfig;
     private final SecretKey jwtSecretKey;
     private final ObjectMapper objectMapper;
 
-    private AppConfig.Security.JWT jwtConfig;
-
-    @PostConstruct
-    public void init() {
-        jwtConfig = appConfig.getSecurity().getJwt();
-    }
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-        try {
 
+        try {
             val authRequest = objectMapper.readValue(request.getInputStream(),
                     AuthenticationRequest.class);
+
+            log.info("Attempting to authenticate user '{}' with password '{}'", authRequest.getUsername(), authRequest.getPassword());
 
             val authentication = new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword());
 
@@ -83,7 +83,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
         String tokenStr = jwtConfig.getTokenPrefix() + token;
 
-        response.setHeader(jwtConfig.getAuthorizationHeader(), tokenStr);
+        response.setHeader(HttpHeaders.AUTHORIZATION, tokenStr);
 
     }
 }

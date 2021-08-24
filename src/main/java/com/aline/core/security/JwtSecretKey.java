@@ -1,6 +1,7 @@
 package com.aline.core.security;
 
 import com.aline.core.config.AppConfig;
+import com.aline.core.security.config.JwtConfig;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -13,13 +14,11 @@ import java.nio.charset.StandardCharsets;
 @RequiredArgsConstructor
 public class JwtSecretKey {
 
-    private final AppConfig appConfig;
+    private final JwtConfig jwtConfig;
 
     @Bean
     public SecretKey secretKey() {
-        return Keys.hmacShaKeyFor(appConfig
-                .getSecurity()
-                .getJwt()
+        return Keys.hmacShaKeyFor(jwtConfig
                 .getSecretKey()
                 .getBytes(StandardCharsets.UTF_8));
     }

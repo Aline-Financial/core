@@ -86,39 +86,5 @@ public class AppConfig {
          * Secret Key for encryption and decryption.
          */
         private String secretKey;
-
-        /**
-         * JWT Accessor
-         */
-        private final JWT jwt = new JWT();
-
-        @Getter
-        @Setter
-        public static class JWT {
-
-            /**
-             * Secret key for JWT Token
-             */
-            private String secretKey;
-
-            /**
-             * Token prefix for JWT Token
-             */
-            private String tokenPrefix = "Bearer ";
-
-            /**
-             * Token expiration after days
-             */
-            private int tokenExpirationAfterDays = 14;
-
-            /**
-             * Get authorization header
-             * @return A string for the authorization header
-             */
-            public String getAuthorizationHeader() {
-                return HttpHeaders.AUTHORIZATION;
-            }
-
-        }
     }
 }
