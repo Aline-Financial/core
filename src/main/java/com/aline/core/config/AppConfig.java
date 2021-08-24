@@ -40,7 +40,7 @@ public class AppConfig {
     private String adminPortal;
 
     /**
-     * Accessor for security properties
+     * Accessor for com.aline.core.security properties
      */
     private final Security security = new Security();
 

@@ -12,8 +12,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 /**
  * Security User Service
@@ -33,7 +33,7 @@ public class SecurityUserService implements UserDetailsService {
         String role = Optional.of(user.getRole()).orElseThrow(
                 () -> new UnauthorizedException(String.format("User '%s' does not have the right permissions.", username)));
 
-        Set<SimpleGrantedAuthority> grantedAuthorities = Collections.singleton(new SimpleGrantedAuthority(role));
+        List<SimpleGrantedAuthority> grantedAuthorities = Collections.singletonList(new SimpleGrantedAuthority(role));
 
         return SecurityUser.builder()
                 .username(user.getUsername())

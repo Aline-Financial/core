@@ -12,9 +12,11 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import javax.crypto.SecretKey;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -23,6 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
 
 @Component
@@ -33,7 +36,13 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private final AppConfig appConfig;
     private final SecretKey jwtSecretKey;
     private final ObjectMapper objectMapper;
-    private final AppConfig.Security.JWT jwtConfig = appConfig.getSecurity().getJwt();
+
+    private AppConfig.Security.JWT jwtConfig;
+
+    @PostConstruct
+    public void init() {
+        jwtConfig = appConfig.getSecurity().getJwt();
+    }
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
@@ -57,9 +66,11 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
         int expireAfterDays = jwtConfig.getTokenExpirationAfterDays();
 
+        GrantedAuthority authority = new ArrayList<>(authResult.getAuthorities()).get(0);
+
         String token = Jwts.builder()
                 .setSubject(authResult.getName())
-                .claim("authorities", authResult.getAuthorities())
+                .claim("authority", authority)
                 .setIssuedAt(Date.from(LocalDate.now()
                         .atStartOfDay(ZoneId.systemDefault())
                         .toInstant()))

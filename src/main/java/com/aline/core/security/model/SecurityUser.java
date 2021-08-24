@@ -5,7 +5,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.Set;
+import java.util.List;
 
 /**
  * Security user model
@@ -15,7 +15,7 @@ public class SecurityUser implements UserDetails {
 
     private String username;
     private String password;
-    private Set<? extends GrantedAuthority> grantedAuthorities;
+    private List<? extends GrantedAuthority> grantedAuthorities;
     private boolean isAccountNonExpired;
     private boolean isAccountNonLocked;
     private boolean isCredentialsNonExpired;
@@ -54,6 +54,10 @@ public class SecurityUser implements UserDetails {
     @Override
     public boolean isEnabled() {
         return false;
+    }
+
+    public GrantedAuthority getAuthority() {
+        return grantedAuthorities.get(0);
     }
 
 }
