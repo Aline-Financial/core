@@ -1,7 +1,5 @@
 package com.aline.core.exception;
 
-import com.aline.core.exception.handler.GlobalExceptionHandler;
-
 /**
  * Super class for bad request exceptions.
  * <p>Status Code: <code>400 BAD REQUEST</code></p>

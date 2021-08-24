@@ -1,7 +1,5 @@
 package com.aline.core.exception;
 
-import com.aline.core.exception.handler.GlobalExceptionHandler;
-
 /**
  * Super class for conflict exceptions.
  * <p>Status Code: <code>409 CONFLICT</code></p>
