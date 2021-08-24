@@ -14,6 +14,9 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 
+/**
+ * One-Time Passcode for password reset.
+ */
 @Getter
 @Setter
 @AllArgsConstructor
@@ -27,8 +30,19 @@ public class OneTimePasscode {
     @SequenceGenerator(name = "otp_generator", sequenceName = "otp_sequence", allocationSize = 1)
     private int id;
 
+    /**
+     * The one-time passcode
+     */
     private String otp;
 
+    /**
+     * Make sure that the passcode has been checked
+     */
+    private boolean checked;
+
+    /**
+     * The user the request is resetting the password for
+     */
     @OneToOne(optional = false)
     private User user;
 
