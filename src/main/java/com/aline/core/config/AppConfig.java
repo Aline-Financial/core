@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpHeaders;
 
 /**
  * The Application config will allow
@@ -16,7 +17,6 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ConfigurationProperties(prefix = "app")
 public class AppConfig {
-
 
     /**
      * The API URL of the microservices.
@@ -86,5 +86,26 @@ public class AppConfig {
          * Secret Key for encryption and decryption.
          */
         private String secretKey;
+
+        /**
+         * JWT Accessor
+         */
+        private final JWT jwt = new JWT();
+
+        @Getter
+        @Setter
+        public static class JWT {
+
+            private String secretKey;
+
+            private String tokenPrefix;
+
+            private int tokenExpirationAfterDays;
+
+            public String getAuthorizationHeader() {
+                return HttpHeaders.AUTHORIZATION;
+            }
+
+        }
     }
 }
