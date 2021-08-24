@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -20,7 +21,10 @@ import java.util.stream.Collectors;
 @Slf4j(topic = "Global Exception Handler")
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(NotFoundException.class)
+    @ExceptionHandler({
+            NotFoundException.class,
+            UsernameNotFoundException.class
+    })
     public ResponseEntity<String> handleNotFoundException(ResponseEntityException e) {
         log.error("404 Not Found: {}", e.toString());
         return ResponseEntity

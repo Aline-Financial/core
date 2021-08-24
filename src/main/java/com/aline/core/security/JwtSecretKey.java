@@ -1,4 +1,4 @@
-package com.aline.core.config.security;
+package com.aline.core.security;
 
 import com.aline.core.config.AppConfig;
 import io.jsonwebtoken.security.Keys;
