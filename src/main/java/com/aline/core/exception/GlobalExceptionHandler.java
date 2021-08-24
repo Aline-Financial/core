@@ -57,7 +57,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         log.error("403 Forbidden: {}", e.getMessage());
         return ResponseEntity
                 .status(HttpStatus.FORBIDDEN)
-                .contentLength(e.getMessage().length())
                 .body(e.getMessage());
 
     }
@@ -67,7 +66,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         log.error("401 Unauthorized: {}", e.getMessage());
         return ResponseEntity
                 .status(HttpStatus.UNAUTHORIZED)
-                .contentLength(e.getMessage().length())
                 .body(e.getMessage());
 
     }
