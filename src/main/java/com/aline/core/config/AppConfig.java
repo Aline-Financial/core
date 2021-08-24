@@ -96,12 +96,25 @@ public class AppConfig {
         @Setter
         public static class JWT {
 
+            /**
+             * Secret key for JWT Token
+             */
             private String secretKey;
 
-            private String tokenPrefix;
+            /**
+             * Token prefix for JWT Token
+             */
+            private String tokenPrefix = "Bearer ";
 
-            private int tokenExpirationAfterDays;
+            /**
+             * Token expiration after days
+             */
+            private int tokenExpirationAfterDays = 14;
 
+            /**
+             * Get authorization header
+             * @return A string for the authorization header
+             */
             public String getAuthorizationHeader() {
                 return HttpHeaders.AUTHORIZATION;
             }
