@@ -1,7 +1,5 @@
 package com.aline.core.exception;
 
-import com.aline.core.exception.handler.GlobalExceptionHandler;
-
 /**
  * Super class for not found exceptions.
  * <p>Status Code: <code>404 NOT FOUND</code></p>

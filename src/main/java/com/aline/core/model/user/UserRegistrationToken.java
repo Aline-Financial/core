@@ -58,7 +58,7 @@ public class UserRegistrationToken {
      * This relationship is defined as One-to-one.
      */
     @NotNull(message = "A user is required.")
-    @OneToOne
+    @OneToOne(optional = false)
     private User user;
 
     /**

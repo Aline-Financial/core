@@ -1,6 +1,7 @@
 package com.aline.core.dto.request;
 
 import com.aline.core.validation.annotations.Name;
+import com.aline.core.validation.annotations.PhoneNumber;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -34,5 +35,9 @@ public class AdminUserRegistration extends UserRegistration implements Serializa
     @Email
     @NotBlank(message = "Email is required.")
     private String email;
+
+    @PhoneNumber
+    @NotBlank(message = "Phone number is required.")
+    private String phone;
 
 }
