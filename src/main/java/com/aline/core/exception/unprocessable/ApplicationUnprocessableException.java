@@ -1,4 +1,4 @@
-package com.aline.core.exception.notcreated;
+package com.aline.core.exception.unprocessable;
 
 import com.aline.core.exception.UnprocessableException;
 
