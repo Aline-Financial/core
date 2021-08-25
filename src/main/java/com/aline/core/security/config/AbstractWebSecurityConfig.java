@@ -59,7 +59,6 @@ public abstract class AbstractWebSecurityConfig extends WebSecurityConfigurerAda
     public abstract String[] publicAntMatchers();
 
     @Override
-    @Autowired
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.jdbcAuthentication()
                 .dataSource(getDataSource())
