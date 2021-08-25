@@ -8,6 +8,8 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -27,18 +29,30 @@ import javax.sql.DataSource;
 import java.util.Arrays;
 import java.util.Collections;
 
+/**
+ * The abstract Web Security configuration class
+ * is used to create a preconfigured security
+ * configuration that can be customized to fit
+ * a microservice's security needs.
+ */
 @Getter
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-@RequiredArgsConstructor
 public abstract class AbstractWebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final DataSource dataSource;
-    private final PasswordEncoder passwordEncoder;
-    private final SecurityUserService service;
-    private final AppConfig appConfig;
-    private final AuthenticationFilter authenticationFilter;
-    private final JwtTokenVerifier verifier;
+    // This is the only time I will ever use field injection.
+    @Autowired
+    private DataSource dataSource;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+    @Autowired
+    private SecurityUserService service;
+    @Autowired
+    private AppConfig appConfig;
+    @Autowired
+    private AuthenticationFilter authenticationFilter;
+    @Autowired
+    private JwtTokenVerifier verifier;
 
     /**
      * Return a string array of all ant matchers
