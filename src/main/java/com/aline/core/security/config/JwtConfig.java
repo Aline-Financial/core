@@ -1,8 +1,10 @@
 package com.aline.core.security.config;
 
+import com.aline.core.config.DisableSecurityConfig;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.lang.Nullable;
@@ -13,6 +15,7 @@ import java.util.Optional;
 @Setter
 @ConfigurationProperties(prefix = "app.security.jwt")
 @Configuration
+@ConditionalOnMissingBean(DisableSecurityConfig.class)
 public class JwtConfig {
 
     /**

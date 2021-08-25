@@ -1,14 +1,17 @@
 package com.aline.core.security.config;
 
 import com.aline.core.config.AppConfig;
+import com.aline.core.config.DisableSecurityConfig;
 import com.aline.core.security.AuthenticationFilter;
 import com.aline.core.security.JwtTokenVerifier;
 import com.aline.core.security.service.SecurityUserService;
 import lombok.Getter;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.security.ConditionalOnDefaultWebSecurity;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -34,7 +37,8 @@ import java.util.Collections;
  * a microservice's security needs.
  */
 @Getter
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@Configuration
+@ConditionalOnMissingBean(DisableSecurityConfig.class)
 public abstract class AbstractWebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     // This is the only time I will ever use field injection.

@@ -1,6 +1,6 @@
 package com.aline.core.security;
 
-import com.aline.core.config.AppConfig;
+import com.aline.core.config.DisableSecurityConfig;
 import com.aline.core.dto.request.AuthenticationRequest;
 import com.aline.core.exception.ForbiddenException;
 import com.aline.core.security.config.JwtConfig;
@@ -11,7 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -21,7 +21,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import javax.crypto.SecretKey;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -36,7 +35,7 @@ import java.util.Date;
 @Component
 @Slf4j(topic = "Authentication Filter")
 @RequiredArgsConstructor
-@ConditionalOnBean(AuthenticationManager.class)
+@ConditionalOnMissingBean(DisableSecurityConfig.class)
 public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     private final JwtConfig jwtConfig;

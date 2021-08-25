@@ -86,5 +86,10 @@ public class AppConfig {
          * Secret Key for encryption and decryption.
          */
         private String secretKey;
+
+        /**
+         * Disables web security
+         */
+        private boolean disableWebSecurity = false;
     }
 }
