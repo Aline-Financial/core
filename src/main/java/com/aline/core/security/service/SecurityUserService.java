@@ -7,14 +7,13 @@ import com.aline.core.repository.UserRepository;
 import com.aline.core.security.model.SecurityUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -36,12 +35,12 @@ public class SecurityUserService implements UserDetailsService {
         String role = Optional.of(user.getRole()).orElseThrow(
                 () -> new UnauthorizedException(String.format("User '%s' does not have the right permissions.", username)));
 
-        List<SimpleGrantedAuthority> grantedAuthorities = Collections.singletonList(new SimpleGrantedAuthority(role));
+        GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(role);
 
         return SecurityUser.builder()
                 .username(user.getUsername())
                 .password(user.getPassword())
-                .grantedAuthorities(grantedAuthorities)
+                .grantedAuthority(grantedAuthority)
                 .isAccountNonExpired(true)
                 .isAccountNonLocked(true)
                 .isCredentialsNonExpired(true)

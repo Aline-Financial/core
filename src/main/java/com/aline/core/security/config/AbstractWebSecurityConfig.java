@@ -1,22 +1,19 @@
 package com.aline.core.security.config;
 
 import com.aline.core.config.AppConfig;
-import com.aline.core.config.DisableSecurityConfig;
 import com.aline.core.security.AuthenticationFilter;
 import com.aline.core.security.JwtTokenVerifier;
 import com.aline.core.security.service.SecurityUserService;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.autoconfigure.security.ConditionalOnDefaultWebSecurity;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -37,8 +34,7 @@ import java.util.Collections;
  * a microservice's security needs.
  */
 @Getter
-@Configuration
-@ConditionalOnMissingBean(DisableSecurityConfig.class)
+@Slf4j
 public abstract class AbstractWebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     // This is the only time I will ever use field injection.
@@ -63,7 +59,9 @@ public abstract class AbstractWebSecurityConfig extends WebSecurityConfigurerAda
     public abstract String[] publicAntMatchers();
 
     @Override
+    @Autowired
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        log.info("Configure Authentication Manager");
         auth.jdbcAuthentication()
                 .dataSource(getDataSource())
                 .usersByUsernameQuery("SELECT username, password, enabled FROM user WHERE username = ?")
@@ -73,15 +71,17 @@ public abstract class AbstractWebSecurityConfig extends WebSecurityConfigurerAda
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        log.info("Configure HTTP Security");
         http.cors().and().csrf().disable()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .addFilter(getAuthenticationFilter())
-                .addFilterAfter(getVerifier(), AuthenticationFilter.class)
+                .addFilterAfter(getVerifier(), getAuthenticationFilter().getClass())
                 .authorizeRequests()
                 // Default ant matchers
-                .antMatchers("/v3/api-docs/**",
+                .antMatchers("/",
+                        "/v3/api-docs/**",
                         "/health",
                         "/swagger-ui/**",
                         "/swagger-ui.html",
@@ -104,6 +104,7 @@ public abstract class AbstractWebSecurityConfig extends WebSecurityConfigurerAda
     @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
+        log.info("Exposing AuthenticationManager bean.");
         return super.authenticationManagerBean();
     }
 

@@ -27,9 +27,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.ZoneId;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -51,12 +50,10 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-
+        log.info("Attempting to authenticate user.");
         try {
             val authRequest = objectMapper.readValue(request.getInputStream(),
                     AuthenticationRequest.class);
-
-            log.info("Attempting to authenticate user '{}' with password '{}'", authRequest.getUsername(), authRequest.getPassword());
 
             val authentication = new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword());
 
@@ -70,7 +67,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
-
+        log.info("Successfully authenticated.");
         int expireAfterDays = jwtConfig.getTokenExpirationAfterDays();
 
         GrantedAuthority authority = new ArrayList<>(authResult.getAuthorities()).get(0);
@@ -78,8 +75,8 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
         String token = Jwts.builder()
                 .setSubject(authResult.getName())
                 .claim("authority", authority.getAuthority())
-                .setIssuedAt(Date.from(Instant.from(LocalDate.now())))
-                .setExpiration(Date.from(Instant.from(LocalDate.now().plusDays(expireAfterDays))))
+                .setIssuedAt(Date.from(LocalDateTime.now().toInstant(ZoneOffset.UTC)))
+                .setExpiration(Date.from(LocalDateTime.now().plusDays(expireAfterDays).toInstant(ZoneOffset.UTC)))
                 .signWith(jwtSecretKey, SignatureAlgorithm.HS512)
                 .compact();
 

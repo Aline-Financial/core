@@ -5,7 +5,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.List;
+import java.util.Collections;
 
 /**
  * Security user model
@@ -15,7 +15,7 @@ public class SecurityUser implements UserDetails {
 
     private String username;
     private String password;
-    private List<? extends GrantedAuthority> grantedAuthorities;
+    private GrantedAuthority grantedAuthority;
     private boolean isAccountNonExpired;
     private boolean isAccountNonLocked;
     private boolean isCredentialsNonExpired;
@@ -23,7 +23,7 @@ public class SecurityUser implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return grantedAuthorities;
+        return Collections.singleton(grantedAuthority);
     }
 
     @Override

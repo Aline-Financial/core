@@ -1,11 +1,9 @@
 package com.aline.core.security;
 
-import com.aline.core.config.AppConfig;
 import com.aline.core.config.DisableSecurityConfig;
 import com.aline.core.security.config.JwtConfig;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -55,8 +55,6 @@ public class JwtToken {
 
         Claims body = claimsJws.getBody();
 
-        log.info("Claim: {}", body);
-
         String username = body.getSubject();
         val authority = body.get("authority", String.class);
         val grantedAuthority = new SimpleGrantedAuthority(authority);
