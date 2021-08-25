@@ -56,8 +56,4 @@ public class SecurityUser implements UserDetails {
         return false;
     }
 
-    public GrantedAuthority getAuthority() {
-        return grantedAuthorities.get(0);
-    }
-
 }

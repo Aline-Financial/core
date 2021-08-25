@@ -27,6 +27,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -76,14 +77,9 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
         String token = Jwts.builder()
                 .setSubject(authResult.getName())
-                .claim("authority", authority)
-                .setIssuedAt(Date.from(LocalDate.now()
-                        .atStartOfDay(ZoneId.systemDefault())
-                        .toInstant()))
-                .setExpiration(Date.from(LocalDate.now()
-                        .plusDays(expireAfterDays)
-                        .atStartOfDay(ZoneId.systemDefault())
-                        .toInstant()))
+                .claim("authority", authority.getAuthority())
+                .setIssuedAt(Date.from(Instant.from(LocalDate.now())))
+                .setExpiration(Date.from(Instant.from(LocalDate.now().plusDays(expireAfterDays))))
                 .signWith(jwtSecretKey, SignatureAlgorithm.HS512)
                 .compact();
 

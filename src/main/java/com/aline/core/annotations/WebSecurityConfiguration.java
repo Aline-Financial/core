@@ -14,7 +14,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 @Configuration
-@EnableGlobalMethodSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 @ConditionalOnMissingBean(DisableSecurityConfig.class)
 public @interface WebSecurityConfiguration {
     @AliasFor(annotation = EnableGlobalMethodSecurity.class, attribute = "prePostEnabled")

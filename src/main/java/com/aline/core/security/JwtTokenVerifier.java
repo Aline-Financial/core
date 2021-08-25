@@ -1,14 +1,20 @@
 package com.aline.core.security;
 
 import com.aline.core.config.DisableSecurityConfig;
+import com.aline.core.exception.UnauthorizedException;
+import com.aline.core.exception.notfound.UserNotFoundException;
+import com.aline.core.model.user.User;
+import com.aline.core.repository.UserRepository;
 import com.aline.core.security.config.JwtConfig;
 import com.aline.core.security.model.JwtToken;
+import com.aline.core.security.model.UserAuthenticationToken;
 import io.jsonwebtoken.JwtException;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.http.HttpHeaders;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -32,6 +38,7 @@ public class JwtTokenVerifier extends OncePerRequestFilter {
 
     private final JwtConfig jwtConfig;
     private final SecretKey secretKey;
+    private final UserRepository userRepository;
 
 
     @Override
@@ -40,7 +47,7 @@ public class JwtTokenVerifier extends OncePerRequestFilter {
         String authorizationHeader = Optional.ofNullable(request.getHeader(HttpHeaders.AUTHORIZATION))
                 .orElse("");
 
-        if (Strings.isBlank(authorizationHeader) || !authorizationHeader.startsWith(HttpHeaders.AUTHORIZATION)) {
+        if (Strings.isBlank(authorizationHeader) || !authorizationHeader.startsWith(jwtConfig.getTokenPrefix())) {
             filterChain.doFilter(request, response);
             return;
         }
@@ -51,18 +58,17 @@ public class JwtTokenVerifier extends OncePerRequestFilter {
             // Parse the token
             JwtToken jwtToken = JwtToken.from(token, secretKey);
             String username = jwtToken.getUsername();
+
+            User user = userRepository.findByUsername(username).orElseThrow(UserNotFoundException::new);
+
             GrantedAuthority authority = jwtToken.getAuthority();
 
-            Authentication authentication = new UsernamePasswordAuthenticationToken(
-                    username,
-                    null,
-                    Collections.singleton(authority)
-            );
+            Authentication authentication = new UserAuthenticationToken(user,authority);
 
             SecurityContextHolder.getContext().setAuthentication(authentication);
         } catch (JwtException e) {
             e.printStackTrace();
-            throw new IllegalStateException(String.format("Token %s cannot be trusted.", token));
+            throw new IllegalStateException("Token cannot be trusted.");
         }
 
         filterChain.doFilter(request, response);
