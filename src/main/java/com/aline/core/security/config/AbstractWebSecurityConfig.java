@@ -5,11 +5,9 @@ import com.aline.core.security.AuthenticationFilter;
 import com.aline.core.security.JwtTokenVerifier;
 import com.aline.core.security.service.SecurityUserService;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.autoconfigure.security.ConditionalOnDefaultWebSecurity;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -36,7 +34,6 @@ import java.util.Collections;
  * a microservice's security needs.
  */
 @Getter
-@EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public abstract class AbstractWebSecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -92,6 +89,8 @@ public abstract class AbstractWebSecurityConfig extends WebSecurityConfigurerAda
                 .anyRequest()
                 .authenticated();
     }
+
+    /* Beans used for this configuration */
 
     /**
      * Provides the authentication filter with an
