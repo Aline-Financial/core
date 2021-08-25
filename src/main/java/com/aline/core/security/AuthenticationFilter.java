@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -35,6 +36,7 @@ import java.util.Date;
 @Component
 @Slf4j(topic = "Authentication Filter")
 @RequiredArgsConstructor
+@ConditionalOnBean(AuthenticationManager.class)
 public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     private final JwtConfig jwtConfig;
