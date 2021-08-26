@@ -33,7 +33,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        final String authHeader = Optional.of(request.getHeader(HttpHeaders.AUTHORIZATION)).orElse("");
+        final String authHeader = Optional.ofNullable(request.getHeader(HttpHeaders.AUTHORIZATION)).orElse("");
 
         // Validate authorization header
         if (authHeader.isEmpty() || !authHeader.startsWith(jwtConfig.getTokenPrefix())) {
