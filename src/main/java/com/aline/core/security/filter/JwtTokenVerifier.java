@@ -23,10 +23,6 @@ public class JwtTokenVerifier extends JwtTokenFilter {
     @Override
     protected void doFilterWithJwt(JwtToken token, HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException {
         UserAuthToken authenticationToken = new UserAuthToken(token.getUsername(), token.getAuthority());
-        authenticationToken.setDetails(
-                new WebAuthenticationDetailsSource()
-                        .buildDetails(request)
-        );
         val securityContext = SecurityContextHolder.getContext();
         securityContext.setAuthentication(authenticationToken);
     }
