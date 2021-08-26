@@ -34,5 +34,5 @@ public abstract class AbstractAuthorizationService<T> {
                 .toUpperCase());
     }
 
-    protected abstract boolean canAccess(T responseBody);
+    public abstract boolean canAccess(T responseBody);
 }

@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -39,32 +40,14 @@ public abstract class AbstractWebSecurityConfig extends WebSecurityConfigurerAda
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-        // Enable CORS and disable CSRF
-                .cors()
+        http.cors()
                 .and()
                 .csrf().disable()
-
-        // Set session management to stateless
                 .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-
-        // Set endpoint permissions
-                .authorizeRequests()
-        // Default ant matchers
-                .antMatchers(
-                        "/v3/api-docs/**",
-                        "/health",
-                        "/swagger-ui/**",
-                        "/swagger-ui.html",
-                        "/webjars/**",
-                        "**/swagger-resources/**"
-                ).permitAll();
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         configureHttp(http);
 
-        // Private endpoints
         http.authorizeRequests()
                 .anyRequest().authenticated()
                 .and()
@@ -72,6 +55,16 @@ public abstract class AbstractWebSecurityConfig extends WebSecurityConfigurerAda
                 .and()
                 .addFilter(jwtTokenProvider)
                 .addFilterBefore(jwtTokenVerifier, JwtTokenProvider.class);
+    }
+
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/v3/api-docs/**",
+                "/health",
+                "/swagger-ui/**",
+                "/swagger-ui.html",
+                "/webjars/**",
+                "**/swagger-resources/**");
     }
 
     // Authentication Manager Bean exposed for use
