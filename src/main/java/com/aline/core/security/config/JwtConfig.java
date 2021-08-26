@@ -1,11 +1,10 @@
 package com.aline.core.security.config;
 
-import io.jsonwebtoken.JwtParser;
-import io.jsonwebtoken.JwtParserBuilder;
-import io.jsonwebtoken.Jwts;
+import com.aline.core.config.DisableSecurityConfig;
 import io.jsonwebtoken.security.Keys;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,6 +21,7 @@ import java.nio.charset.StandardCharsets;
 @Setter
 @Configuration
 @ConfigurationProperties(prefix = "app.security.jwt")
+@ConditionalOnMissingBean(DisableSecurityConfig.class)
 public class JwtConfig {
 
     /**

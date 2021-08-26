@@ -1,14 +1,14 @@
 package com.aline.core.security.filter;
 
+import com.aline.core.config.DisableSecurityConfig;
 import com.aline.core.exception.UnauthorizedException;
-import com.aline.core.model.user.User;
-import com.aline.core.repository.UserRepository;
 import com.aline.core.security.config.JwtConfig;
 import com.aline.core.security.model.JwtToken;
 import com.aline.core.security.model.UserAuthToken;
 import io.jsonwebtoken.JwtException;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
@@ -25,11 +25,11 @@ import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
+@ConditionalOnMissingBean(DisableSecurityConfig.class)
 public class JwtTokenFilter extends OncePerRequestFilter {
 
     private final JwtConfig jwtConfig;
     private final SecretKey jwtSecretKey;
-    private final UserRepository userRepository;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -53,9 +53,6 @@ public class JwtTokenFilter extends OncePerRequestFilter {
                 return;
             }
 
-            User user = userRepository.findByUsername(jwtToken.getUsername())
-                    .orElse(null);
-
             UserAuthToken authenticationToken = new UserAuthToken(jwtToken.getUsername(), jwtToken.getAuthority());
 
             authenticationToken.setDetails(
@@ -64,6 +61,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
             );
 
             val securityContext = SecurityContextHolder.getContext();
+            securityContext.setAuthentication(authenticationToken);
 
         } catch (JwtException exception) {
             exception.printStackTrace();

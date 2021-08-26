@@ -1,10 +1,12 @@
 package com.aline.core.security.service;
 
+import com.aline.core.config.DisableSecurityConfig;
 import com.aline.core.exception.UnauthorizedException;
 import com.aline.core.model.user.User;
 import com.aline.core.repository.UserRepository;
 import com.aline.core.security.model.SecurityUser;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,6 +18,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@ConditionalOnMissingBean(DisableSecurityConfig.class)
 public class SecurityUserService implements UserDetailsService {
 
     private final UserRepository userRepository;

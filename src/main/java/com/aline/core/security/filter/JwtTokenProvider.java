@@ -1,5 +1,6 @@
 package com.aline.core.security.filter;
 
+import com.aline.core.config.DisableSecurityConfig;
 import com.aline.core.dto.request.AuthenticationRequest;
 import com.aline.core.exception.ForbiddenException;
 import com.aline.core.security.config.JwtConfig;
@@ -10,6 +11,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
@@ -36,6 +38,7 @@ import java.util.Date;
  */
 @Component
 @RequiredArgsConstructor
+@ConditionalOnMissingBean(DisableSecurityConfig.class)
 public class JwtTokenProvider extends UsernamePasswordAuthenticationFilter {
 
     private final JwtConfig jwtConfig;

@@ -1,6 +1,5 @@
 package com.aline.core.security.config;
 
-import com.aline.core.repository.UserRepository;
 import com.aline.core.security.filter.JwtTokenFilter;
 import com.aline.core.security.filter.JwtTokenProvider;
 import com.aline.core.security.service.SecurityUserService;
@@ -13,7 +12,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 public abstract class AbstractWebSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -30,7 +28,7 @@ public abstract class AbstractWebSecurityConfig extends WebSecurityConfigurerAda
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    protected abstract String[] publicAntMatchers();
+    protected abstract void configureHttp(HttpSecurity http) throws Exception;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -54,7 +52,7 @@ public abstract class AbstractWebSecurityConfig extends WebSecurityConfigurerAda
 
         // Set endpoint permissions
                 .authorizeRequests()
-                // Default ant matchers
+        // Default ant matchers
                 .antMatchers(
                         "/v3/api-docs/**",
                         "/health",
@@ -62,14 +60,18 @@ public abstract class AbstractWebSecurityConfig extends WebSecurityConfigurerAda
                         "/swagger-ui.html",
                         "/webjars/**",
                         "**/swagger-resources/**"
-                ).permitAll()
-                .antMatchers(publicAntMatchers()).permitAll()
-                // Private endpoints
-                .anyRequest().authenticated()
+                ).permitAll();
 
+        configureHttp(http);
+
+        // Private endpoints
+        http.authorizeRequests()
+                .anyRequest().authenticated()
+                .and()
+                .exceptionHandling()
                 .and()
                 .addFilter(jwtTokenProvider)
-                .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(jwtTokenFilter, JwtTokenProvider.class);
     }
 
     // Authentication Manager Bean exposed for use

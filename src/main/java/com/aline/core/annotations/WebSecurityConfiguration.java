@@ -2,7 +2,6 @@ package com.aline.core.annotations;
 
 import com.aline.core.config.DisableSecurityConfig;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.AliasFor;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 

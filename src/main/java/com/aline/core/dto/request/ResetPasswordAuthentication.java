@@ -1,7 +1,6 @@
 package com.aline.core.dto.request;
 
 import com.aline.core.dto.response.ContactMethod;
-import com.aline.core.validation.annotations.SocialSecurity;
 import com.aline.core.validation.annotations.Username;
 import lombok.Builder;
 import lombok.Data;
