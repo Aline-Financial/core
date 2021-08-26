@@ -1,6 +1,6 @@
 package com.aline.core.security.config;
 
-import com.aline.core.security.filter.JwtTokenFilter;
+import com.aline.core.security.filter.JwtTokenVerifier;
 import com.aline.core.security.filter.JwtTokenProvider;
 import com.aline.core.security.service.SecurityUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ public abstract class AbstractWebSecurityConfig extends WebSecurityConfigurerAda
     private SecurityUserService securityUserService;
 
     @Autowired
-    private JwtTokenFilter jwtTokenFilter;
+    private JwtTokenVerifier jwtTokenVerifier;
 
     @Autowired
     private JwtTokenProvider jwtTokenProvider;
@@ -71,7 +71,7 @@ public abstract class AbstractWebSecurityConfig extends WebSecurityConfigurerAda
                 .exceptionHandling()
                 .and()
                 .addFilter(jwtTokenProvider)
-                .addFilterBefore(jwtTokenFilter, JwtTokenProvider.class);
+                .addFilterBefore(jwtTokenVerifier, JwtTokenProvider.class);
     }
 
     // Authentication Manager Bean exposed for use
