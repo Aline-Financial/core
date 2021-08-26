@@ -1,51 +1,46 @@
 package com.aline.core.security.config;
 
-import com.aline.core.config.DisableSecurityConfig;
+import io.jsonwebtoken.JwtParser;
+import io.jsonwebtoken.JwtParserBuilder;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.security.Keys;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.Setter;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.lang.Nullable;
 
-import java.util.Optional;
+import javax.crypto.SecretKey;
+import java.nio.charset.StandardCharsets;
 
+/**
+ * JWT Configuration class is used to inject
+ * variable fields such as secret key into a
+ * requesting bean.
+ */
 @Getter
 @Setter
-@ConfigurationProperties(prefix = "app.security.jwt")
 @Configuration
-@ConditionalOnMissingBean(DisableSecurityConfig.class)
+@ConfigurationProperties(prefix = "app.security.jwt")
 public class JwtConfig {
 
     /**
-     * Secret key for JWT Token
+     * JWT Secret Key
      */
-    private String secretKey;
-
+    private String secretKey ;
     /**
-     * Token prefix for JWT Token
+     * Token prefix
      */
-    private String tokenPrefix;
-
+    private String tokenPrefix = "Bearer";
     /**
-     * Token expiration after days
+     * The number of days the token will expire after
      */
-    private Integer tokenExpirationAfterDays;
+    private int tokenExpirationAfterDays = 14;
 
-    public String getTokenPrefix() {
-        return returnOrDefault(tokenPrefix, "Bearer ");
+    // JWT Secret Key bean
+    @Bean(name = "jwtSecretKey")
+    public SecretKey jwtSecretKey() {
+        return Keys.hmacShaKeyFor(getSecretKey().getBytes(StandardCharsets.UTF_8));
     }
 
-    public Integer getTokenExpirationAfterDays() {
-        return returnOrDefault(tokenExpirationAfterDays, 14);
-    }
-
-    private String returnOrDefault(@Nullable String toBeReturned, @NonNull String defaultValue) {
-        return Optional.ofNullable(toBeReturned).orElse(defaultValue);
-    }
-
-    private int returnOrDefault(@Nullable Integer toBeReturned, int defaultValue) {
-        return Optional.ofNullable(toBeReturned).orElse(defaultValue);
-    }
 }
