@@ -16,7 +16,7 @@ import java.util.Date;
 
 @Data
 @Builder
-public class UserJwt {
+public class JwtToken {
 
     /**
      * User grabbed from the signed JWT
@@ -38,7 +38,21 @@ public class UserJwt {
      */
     private Date expiration;
 
-    public static UserJwt from(String jwt, SecretKey key) {
+    /**
+     * Returns if the token is expired.
+     * @return A boolean representing the expiration of the token.
+     */
+    public boolean isExpired() {
+        return Date.from(Instant.now()).after(expiration);
+    }
+
+    /**
+     * Get a JWT Token from passed in token and key.
+     * @param jwt The JWT token
+     * @param key The key the token is signed with
+     * @return A JWT Token object
+     */
+    public static JwtToken from(String jwt, SecretKey key) {
         JwtParser jwtParser = Jwts.parserBuilder()
                 .setSigningKey(key)
                 .build();
@@ -56,7 +70,7 @@ public class UserJwt {
         val iat = body.get("iat", Long.class);
         val exp = body.get("exp", Long.class);
 
-        return UserJwt.builder()
+        return JwtToken.builder()
                 .username(username)
                 .authority(authority)
                 .issuedAt(Date.from(Instant.ofEpochSecond(iat)))
