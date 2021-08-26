@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -65,7 +66,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     }
 
-    @ExceptionHandler(UnauthorizedException.class)
+    @ExceptionHandler({UnauthorizedException.class, AccessDeniedException.class})
     public ResponseEntity<String> handleUnauthorizedException(ResponseEntityException e) {
         log.error("401 Unauthorized: {}", e.getMessage());
         return ResponseEntity
