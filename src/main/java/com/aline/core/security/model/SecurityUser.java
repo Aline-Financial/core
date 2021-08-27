@@ -55,8 +55,4 @@ public class SecurityUser implements UserDetails {
         return isEnabled;
     }
 
-    @Override
-    public String toString() {
-        return username;
-    }
 }
