@@ -67,7 +67,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler({UnauthorizedException.class, AccessDeniedException.class})
-    public ResponseEntity<String> handleUnauthorizedException(ResponseEntityException e) {
+    public ResponseEntity<String> handleUnauthorizedException(Exception e) {
         log.error("401 Unauthorized: {}", e.getMessage());
         return ResponseEntity
                 .status(HttpStatus.UNAUTHORIZED)

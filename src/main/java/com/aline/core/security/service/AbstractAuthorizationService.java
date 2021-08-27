@@ -5,6 +5,7 @@ import com.aline.core.security.model.SecurityUser;
 import com.aline.core.security.model.UserRoleAuthority;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -25,9 +26,13 @@ public abstract class AbstractAuthorizationService<T> {
     }
 
     protected UserRoleAuthority getAuthority() {
-        return (UserRoleAuthority) new ArrayList<>(getAuthentication()
+        GrantedAuthority grantedAuthority = new ArrayList<>(getAuthentication()
                 .getAuthorities())
                 .get(0);
+        if (grantedAuthority instanceof SimpleGrantedAuthority) {
+            return new UserRoleAuthority(grantedAuthority.getAuthority());
+        }
+        return (UserRoleAuthority) grantedAuthority ;
     }
 
     protected UserRole getRole() {
