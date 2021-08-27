@@ -1,6 +1,7 @@
 package com.aline.core.security.service;
 
 import com.aline.core.model.user.UserRole;
+import com.aline.core.security.model.SecurityUser;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
@@ -19,7 +20,7 @@ public abstract class AbstractAuthorizationService<T> {
     }
 
     protected String getUsername() {
-        return (String) getAuthentication().getPrincipal();
+        return getAuthentication().getPrincipal().toString();
     }
 
     protected GrantedAuthority getAuthority() {
