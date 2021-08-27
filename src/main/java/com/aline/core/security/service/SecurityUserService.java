@@ -3,8 +3,10 @@ package com.aline.core.security.service;
 import com.aline.core.config.DisableSecurityConfig;
 import com.aline.core.exception.UnauthorizedException;
 import com.aline.core.model.user.User;
+import com.aline.core.model.user.UserRole;
 import com.aline.core.repository.UserRepository;
 import com.aline.core.security.model.SecurityUser;
+import com.aline.core.security.model.UserRoleAuthority;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.security.core.GrantedAuthority;
@@ -28,10 +30,10 @@ public class SecurityUserService implements UserDetailsService {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException(String.format("User '%s' not found.", username)));
 
-        String role = Optional.of(user.getRole())
+        UserRole role = Optional.of(user.getUserRole())
                 .orElseThrow(() -> new UnauthorizedException(String.format("User '%s' does not have the right permissions.", username)));
 
-        GrantedAuthority authority = new SimpleGrantedAuthority(role);
+        UserRoleAuthority authority = new UserRoleAuthority(role);
 
         return SecurityUser.builder()
                 .username(user.getUsername())

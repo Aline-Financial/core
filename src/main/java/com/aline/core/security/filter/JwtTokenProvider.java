@@ -78,7 +78,7 @@ public class JwtTokenProvider extends UsernamePasswordAuthenticationFilter {
                 .claim("authority", authority.getAuthority())
                 .setIssuedAt(Date.from(Instant.now()))
                 .setExpiration(Date.from(Instant.now().plus(expireAfterDays, ChronoUnit.DAYS)))
-                .signWith(jwtSecretKey, SignatureAlgorithm.HS512)
+                .signWith(jwtSecretKey, SignatureAlgorithm.HS256)
                 .compact();
 
         response.setHeader(HttpHeaders.AUTHORIZATION, token);
