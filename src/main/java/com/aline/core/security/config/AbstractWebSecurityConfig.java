@@ -29,6 +29,9 @@ public abstract class AbstractWebSecurityConfig extends WebSecurityConfigurerAda
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private WebSecurityConstants constants;
+
     protected abstract void configureHttp(HttpSecurity http) throws Exception;
 
     @Override
@@ -72,6 +75,11 @@ public abstract class AbstractWebSecurityConfig extends WebSecurityConfigurerAda
     @Bean
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
+    }
+
+    @Bean(name = "roles")
+    public WebSecurityConstants.Roles securityRoles() {
+        return constants.getAuthorities();
     }
 
 }

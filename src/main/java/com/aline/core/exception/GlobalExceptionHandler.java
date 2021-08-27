@@ -57,8 +57,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 .body(e.getMessage());
     }
 
-    @ExceptionHandler(ForbiddenException.class)
-    public ResponseEntity<String> handleForbiddenException(ResponseEntityException e) {
+    @ExceptionHandler({ForbiddenException.class, AccessDeniedException.class})
+    public ResponseEntity<String> handleForbiddenException(Exception e) {
         log.error("403 Forbidden: {}", e.getMessage());
         return ResponseEntity
                 .status(HttpStatus.FORBIDDEN)
@@ -66,8 +66,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     }
 
-    @ExceptionHandler({UnauthorizedException.class, AccessDeniedException.class})
-    public ResponseEntity<String> handleUnauthorizedException(Exception e) {
+    @ExceptionHandler(UnauthorizedException.class)
+    public ResponseEntity<String> handleUnauthorizedException(ResponseEntityException e) {
         log.error("401 Unauthorized: {}", e.getMessage());
         return ResponseEntity
                 .status(HttpStatus.UNAUTHORIZED)
