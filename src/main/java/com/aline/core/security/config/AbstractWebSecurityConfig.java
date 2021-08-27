@@ -1,7 +1,7 @@
 package com.aline.core.security.config;
 
-import com.aline.core.security.filter.JwtTokenVerifier;
 import com.aline.core.security.filter.JwtTokenProvider;
+import com.aline.core.security.filter.JwtTokenVerifier;
 import com.aline.core.security.service.SecurityUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
