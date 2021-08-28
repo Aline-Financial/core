@@ -1,4 +1,4 @@
-package com.aline.core.validation.annotations;
+package com.aline.core.validation.annotation;
 
 import javax.validation.Payload;
 import java.lang.annotation.Documented;

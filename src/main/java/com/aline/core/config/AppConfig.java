@@ -17,7 +17,6 @@ import org.springframework.context.annotation.Configuration;
 @ConfigurationProperties(prefix = "app")
 public class AppConfig {
 
-
     /**
      * The API URL of the microservices.
      * @apiNote The url has a {port} placeholder.
@@ -40,7 +39,7 @@ public class AppConfig {
     private String adminPortal;
 
     /**
-     * Accessor for security properties
+     * Accessor for com.aline.core.security properties
      */
     private final Security security = new Security();
 
@@ -86,5 +85,10 @@ public class AppConfig {
          * Secret Key for encryption and decryption.
          */
         private String secretKey;
+
+        /**
+         * Disables web security
+         */
+        private boolean disableWebSecurity = false;
     }
 }

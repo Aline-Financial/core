@@ -1,6 +1,6 @@
 package com.aline.core.validation.validators;
 
-import com.aline.core.validation.annotations.Username;
+import com.aline.core.validation.annotation.Username;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

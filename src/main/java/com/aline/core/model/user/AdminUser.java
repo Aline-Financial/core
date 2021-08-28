@@ -1,7 +1,7 @@
 package com.aline.core.model.user;
 
-import com.aline.core.validation.annotations.Name;
-import com.aline.core.validation.annotations.PhoneNumber;
+import com.aline.core.validation.annotation.Name;
+import com.aline.core.validation.annotation.PhoneNumber;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

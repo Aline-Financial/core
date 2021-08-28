@@ -1,7 +1,7 @@
 package com.aline.core.dto.request;
 
-import com.aline.core.validation.annotations.Password;
-import com.aline.core.validation.annotations.Username;
+import com.aline.core.validation.annotation.Password;
+import com.aline.core.validation.annotation.Username;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.AllArgsConstructor;

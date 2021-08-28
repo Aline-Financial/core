@@ -1,6 +1,6 @@
-package com.aline.core.validation.annotations;
+package com.aline.core.validation.annotation;
 
-import com.aline.core.validation.validators.NameValidator;
+import com.aline.core.validation.validators.AddressValidator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -11,18 +11,24 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * <p>The string has to be a name that contains only alphabetic letters, while also allowing hyphens and spaces.</p>
+ * <p>String must be a well-formed street address.</p>
  */
 @Target({ ElementType.METHOD, ElementType.FIELD, ElementType.ANNOTATION_TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = NameValidator.class)
+@Constraint(validatedBy = AddressValidator.class)
 @Documented
-public @interface Name {
+public @interface Address {
 
-    String message() default "Name may only contain alphabetic letters as well as hyphens and spaces.";
+    String message() default "Address is not valid.";
+    Type type() default Type.DEFAULT;
 
     Class<?>[] groups() default {};
 
     Class<? extends Payload>[] payload() default {};
+
+    enum Type {
+        DEFAULT,
+        MAILING
+    }
 
 }

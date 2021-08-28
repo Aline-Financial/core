@@ -1,4 +1,4 @@
-package com.aline.core.validation.annotations;
+package com.aline.core.validation.annotation;
 
 import com.aline.core.validation.validators.PhoneNumberValidator;
 

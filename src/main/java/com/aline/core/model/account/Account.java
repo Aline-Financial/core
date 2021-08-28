@@ -2,7 +2,7 @@ package com.aline.core.model.account;
 
 import com.aline.core.listener.CreateAccountListener;
 import com.aline.core.model.Member;
-import com.aline.core.validation.annotations.AccountNumber;
+import com.aline.core.validation.annotation.AccountNumber;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

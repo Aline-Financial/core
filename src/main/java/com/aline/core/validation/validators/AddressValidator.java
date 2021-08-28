@@ -1,6 +1,6 @@
 package com.aline.core.validation.validators;
 
-import com.aline.core.validation.annotations.Address;
+import com.aline.core.validation.annotation.Address;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
