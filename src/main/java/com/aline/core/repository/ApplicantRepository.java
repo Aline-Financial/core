@@ -14,6 +14,11 @@ public interface ApplicantRepository extends JpaRepositoryWithSpecification<Appl
     boolean existsByDriversLicense(String driversLicense);
     boolean existsBySocialSecurity(String socialSecurity);
 
-    @Query("SELECT a FROM Applicant a LEFT JOIN MemberUser u ON u.member.applicant.id = a.id WHERE u.username = ?1")
+    @Query("SELECT a FROM Applicant a " +
+            "LEFT JOIN Member m " +
+            "ON m.applicant = a " +
+            "LEFT JOIN MemberUser u " +
+            "ON u.member.id = m.id " +
+            "WHERE u.username = ?1")
     Optional<Applicant> findApplicantByUsername(String username);
 }
