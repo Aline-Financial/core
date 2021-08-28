@@ -19,7 +19,6 @@ import java.nio.charset.StandardCharsets;
  */
 @Getter
 @Setter
-@Configuration
 @ConfigurationProperties(prefix = "app.security.jwt")
 @ConditionalOnMissingBean(DisableSecurityConfig.class)
 public class JwtConfig {

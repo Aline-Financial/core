@@ -1,11 +1,11 @@
 package com.aline.core.security.filter;
 
-import com.aline.core.config.DisableSecurityConfig;
+import com.aline.core.security.config.JwtConfig;
 import com.aline.core.security.model.JwtToken;
 import com.aline.core.security.model.UserAuthToken;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @Component
 @RequiredArgsConstructor
-@ConditionalOnMissingBean(DisableSecurityConfig.class)
+@ConditionalOnBean(JwtConfig.class)
 public class JwtTokenVerifier extends JwtTokenFilter {
 
     @Override
