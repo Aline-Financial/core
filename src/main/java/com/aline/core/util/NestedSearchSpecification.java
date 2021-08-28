@@ -6,6 +6,8 @@ import lombok.val;
 import javax.persistence.TupleElement;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.From;
+import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.persistence.metamodel.Attribute;
@@ -46,7 +48,9 @@ public abstract class NestedSearchSpecification<T> extends SearchSpecification<T
                         .filter(attribute -> getNestedEntityTypes().contains(attribute.getJavaType()))
                         .map(Attribute::getName)
                         .map(root::join)
-                        .map(TupleElement::getAlias)
+                        .map(From::getJoins)
+                        .flatMap(joins -> joins.stream().map(Join::getAttribute))
+                        .map(Attribute::getName)
                 ).collect(Collectors.joining(", "));
 
         log.info(nextAttributes);
