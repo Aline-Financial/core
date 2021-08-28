@@ -39,5 +39,5 @@ public abstract class AbstractAuthorizationService<T> {
         return getAuthority().getUserRole();
     }
 
-    public abstract boolean canAccess(T responseBody);
+    public abstract boolean canAccess(T returnObject);
 }
