@@ -1,7 +1,6 @@
 package com.aline.core.security.service;
 
 import com.aline.core.model.user.UserRole;
-import com.aline.core.security.model.SecurityUser;
 import com.aline.core.security.model.UserRoleAuthority;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;

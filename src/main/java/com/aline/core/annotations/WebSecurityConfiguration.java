@@ -1,8 +1,8 @@
 package com.aline.core.annotations;
 
 import com.aline.core.config.DisableSecurityConfig;
+import com.aline.core.security.config.AbstractWebSecurityConfig;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.context.annotation.Import;
 import org.springframework.core.annotation.AliasFor;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 
@@ -11,7 +11,6 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-import com.aline.core.security.config.AbstractWebSecurityConfig;
 
 /**
  * The WebSecurityConfiguration annotation specifies

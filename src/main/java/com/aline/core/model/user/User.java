@@ -8,9 +8,7 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.Hibernate;
-import org.springframework.security.access.prepost.PreAuthorize;
 
-import javax.annotation.security.RolesAllowed;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.DiscriminatorValue;
