@@ -1,12 +1,17 @@
 package com.aline.core.security.service;
 
+import com.aline.core.exception.UnauthorizedException;
+import com.aline.core.model.user.User;
 import com.aline.core.model.user.UserRole;
+import com.aline.core.repository.UserRepository;
 import com.aline.core.security.model.UserRoleAuthority;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,7 +23,11 @@ import java.util.List;
  * for easy access to the security context information.
  * @param <T> The parameter type of the predicate.
  */
+@Component
 public abstract class AbstractAuthorizationService<T> {
+
+    @Autowired
+    private UserRepository userRepository;
 
     /**
      * Get the current security context.
@@ -67,13 +76,25 @@ public abstract class AbstractAuthorizationService<T> {
         return getAuthority().getUserRole();
     }
 
-    protected boolean userIsManagement() {
+
+    /**
+     * @return Boolean value of whether role is admin or employee.
+     */
+    protected boolean roleIsManagement() {
         List<UserRole> managementRoles = Arrays.asList(
                 UserRole.EMPLOYEE,
                 UserRole.ADMINISTRATOR
         );
 
         return managementRoles.contains(getRole());
+    }
+
+    /**
+     * @return A user with the security context principal's username
+     */
+    protected User getUser() {
+        return userRepository.findByUsername(getUsername())
+                .orElseThrow(() -> new UnauthorizedException("User could not be found."));
     }
 
     public abstract boolean canAccess(T returnObject);
