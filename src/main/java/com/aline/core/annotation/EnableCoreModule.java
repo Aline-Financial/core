@@ -1,4 +1,4 @@
-package com.aline.core.annotations;
+package com.aline.core.annotation;
 
 import com.aline.core.CoreModuleConfiguration;
 import org.springframework.context.annotation.Import;

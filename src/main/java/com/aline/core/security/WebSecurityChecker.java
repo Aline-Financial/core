@@ -1,6 +1,6 @@
 package com.aline.core.security;
 
-import com.aline.core.annotations.ConditionalOnMissingWebSecurity;
+import com.aline.core.annotation.ConditionalOnMissingWebSecurity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;

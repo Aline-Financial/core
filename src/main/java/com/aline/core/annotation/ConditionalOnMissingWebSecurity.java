@@ -1,4 +1,4 @@
-package com.aline.core.annotations;
+package com.aline.core.annotation;
 
 import com.aline.core.security.config.AbstractWebSecurityConfig;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;

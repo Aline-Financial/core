@@ -1,4 +1,4 @@
-package com.aline.core.annotations.test;
+package com.aline.core.annotation.test;
 
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;

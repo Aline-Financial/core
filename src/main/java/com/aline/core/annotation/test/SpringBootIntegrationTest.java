@@ -1,4 +1,4 @@
-package com.aline.core.annotations.test;
+package com.aline.core.annotation.test;
 
 
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
