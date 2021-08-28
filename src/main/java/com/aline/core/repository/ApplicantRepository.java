@@ -21,4 +21,5 @@ public interface ApplicantRepository extends JpaRepositoryWithSpecification<Appl
             "ON u.member.id = m.id " +
             "WHERE u.username = ?1")
     Optional<Applicant> findApplicantByUsername(String username);
+
 }
