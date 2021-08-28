@@ -7,26 +7,22 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import javax.persistence.metamodel.Attribute;
-import java.util.Arrays;
 
+/**
+ * Abstract class to create predicate for searching through
+ * a given model.
+ * @param <T> The model to search through.
+ * @param <S> The search term type.
+ */
 @RequiredArgsConstructor
-public abstract class SearchSpecification<T> implements Specification<T> {
+public abstract class SearchSpecification<T, S> implements Specification<T> {
 
-    private final String search;
+    private final S searchTerm;
+
+    protected S getSearchTerm() {
+        return searchTerm;
+    }
 
     @Override
-    public Predicate toPredicate(Root<T> root, CriteriaQuery<?> cq, CriteriaBuilder cb) {
-        String[] searchTerms = search.split("[\\s,]");
-
-        Predicate[] predicates = Arrays.stream(searchTerms)
-                .map(String::toLowerCase)
-                .flatMap(searchTerm -> root.getModel().getAttributes().stream()
-                        .filter(attribute -> attribute.getJavaType().getSimpleName().equals("String"))
-                        .map(Attribute::getName)
-                        .map(attributeName -> cb.like(cb.lower(root.get(attributeName)), "%" + searchTerm + "%")))
-                .toArray(Predicate[]::new);
-
-        return cb.or(predicates);
-    }
+    public abstract Predicate toPredicate(Root<T> root, CriteriaQuery<?> cq, CriteriaBuilder cb);
 }

@@ -1,9 +1,5 @@
 package com.aline.core.util;
 
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import org.springframework.data.jpa.domain.Specification;
-
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -20,19 +16,20 @@ import java.util.Arrays;
  * in it.
  * @param <T> The entity type that a search is being applied to.
  */
-@RequiredArgsConstructor
-public class SimpleSearchSpecification<T> implements Specification<T> {
+public class SimpleSearchSpecification<T> extends SearchSpecification<T, String> {
 
-    private final String search;
+    public SimpleSearchSpecification(String searchTerm) {
+        super(searchTerm);
+    }
 
     @Override
     public Predicate toPredicate(Root<T> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder cb) {
-        String[] searchTerms = search.split("[\\s,]");
+        String[] searchTerms = getSearchTerm().split("[\\s,]");
 
         Predicate[] predicates = Arrays.stream(searchTerms)
                 .map(String::toLowerCase)
                 .flatMap(searchTerm -> root.getModel().getAttributes().stream()
-                        .filter(attribute -> attribute.getJavaType().getSimpleName().equals("String"))
+                        .filter(attribute -> attribute.getJavaType() == String.class)
                         .map(Attribute::getName)
                         .map(attributeName -> cb.like(cb.lower(root.get(attributeName)), "%" + searchTerm + "%")))
                 .toArray(Predicate[]::new);
