@@ -1,6 +1,6 @@
 package com.aline.core.validation.validators;
 
-import com.aline.core.validation.annotations.AccountNumber;
+import com.aline.core.validation.annotation.AccountNumber;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.validation.ConstraintValidator;

@@ -1,7 +1,7 @@
 package com.aline.core.model;
 
-import com.aline.core.validation.annotations.Address;
-import com.aline.core.validation.annotations.Zipcode;
+import com.aline.core.validation.annotation.Address;
+import com.aline.core.validation.annotation.Zipcode;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

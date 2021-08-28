@@ -1,7 +1,7 @@
 package com.aline.core.validation.validators;
 
 
-import com.aline.core.validation.annotations.Password;
+import com.aline.core.validation.annotation.Password;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

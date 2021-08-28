@@ -1,7 +1,7 @@
 package com.aline.core.dto.request;
 
-import com.aline.core.validation.annotations.Name;
-import com.aline.core.validation.annotations.PhoneNumber;
+import com.aline.core.validation.annotation.Name;
+import com.aline.core.validation.annotation.PhoneNumber;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,6 +1,6 @@
 package com.aline.core.model.user;
 
-import com.aline.core.validation.annotations.Username;
+import com.aline.core.validation.annotation.Username;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

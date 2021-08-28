@@ -1,12 +1,12 @@
 package com.aline.core.model;
 
 import com.aline.core.crypto.AttributeEncryptor;
-import com.aline.core.validation.annotations.Address;
-import com.aline.core.validation.annotations.DateOfBirth;
-import com.aline.core.validation.annotations.Name;
-import com.aline.core.validation.annotations.PhoneNumber;
-import com.aline.core.validation.annotations.SocialSecurity;
-import com.aline.core.validation.annotations.Zipcode;
+import com.aline.core.validation.annotation.Address;
+import com.aline.core.validation.annotation.DateOfBirth;
+import com.aline.core.validation.annotation.Name;
+import com.aline.core.validation.annotation.PhoneNumber;
+import com.aline.core.validation.annotation.SocialSecurity;
+import com.aline.core.validation.annotation.Zipcode;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
