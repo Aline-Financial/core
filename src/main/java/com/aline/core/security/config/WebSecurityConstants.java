@@ -19,5 +19,6 @@ public class WebSecurityConstants {
         private final String member = UserRole.MEMBER.getRole();
         private final String admin = UserRole.ADMINISTRATOR.getRole();
         private final String employee = UserRole.EMPLOYEE.getRole();
+        private final String[] management = {UserRole.EMPLOYEE.getRole(), UserRole.ADMINISTRATOR.getRole()};
     }
 }
