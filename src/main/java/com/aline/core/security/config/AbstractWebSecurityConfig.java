@@ -79,7 +79,7 @@ public abstract class AbstractWebSecurityConfig extends WebSecurityConfigurerAda
 
     @Bean(name = "roles")
     public WebSecurityConstants.Roles securityRoles() {
-        return constants.getAuthorities();
+        return constants.getRoles();
     }
 
 }

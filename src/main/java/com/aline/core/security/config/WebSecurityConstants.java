@@ -9,10 +9,10 @@ import org.springframework.stereotype.Component;
  * that pertains to web security.
  */
 @Getter
-@Component
+@Component("webSecurityConstants")
 public class WebSecurityConstants {
 
-    Roles authorities = new Roles();
+    Roles roles = new Roles();
 
     @Getter
     public static final class Roles {
