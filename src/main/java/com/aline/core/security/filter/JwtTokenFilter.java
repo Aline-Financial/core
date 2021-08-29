@@ -1,10 +1,12 @@
 package com.aline.core.security.filter;
 
+import com.aline.core.config.DisableSecurityConfig;
 import com.aline.core.exception.UnauthorizedException;
 import com.aline.core.security.config.JwtConfig;
 import com.aline.core.security.model.JwtToken;
 import io.jsonwebtoken.JwtException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -25,6 +27,7 @@ import java.util.Optional;
  * token.
  */
 @Component
+@ConditionalOnMissingBean(DisableSecurityConfig.class)
 public abstract class JwtTokenFilter extends OncePerRequestFilter {
 
     private JwtConfig jwtConfig;
