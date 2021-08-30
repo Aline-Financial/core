@@ -1,5 +1,6 @@
 package com.aline.core.dto.response;
 
+import com.aline.core.model.account.AccountType;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,10 +19,12 @@ import lombok.NoArgsConstructor;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class AccountResponse {
 
-    private long id;
+    private Long id;
+    private AccountType type;
     private String accountNumber;
     private String status;
-    private int availableBalance;
-    private float apy;
+    private Integer balance;
+    private Integer availableBalance;
+    private Float apy;
 
 }
