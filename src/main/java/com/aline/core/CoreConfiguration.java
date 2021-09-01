@@ -9,5 +9,5 @@ import org.springframework.context.annotation.ComponentScan;
 @EnableAutoConfiguration
 @EnableConfigurationProperties
 @EntityScan
-public class CoreModuleConfiguration {
+public class CoreConfiguration {
 }

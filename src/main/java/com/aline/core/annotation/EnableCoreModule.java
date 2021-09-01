@@ -1,6 +1,6 @@
 package com.aline.core.annotation;
 
-import com.aline.core.CoreModuleConfiguration;
+import com.aline.core.CoreConfiguration;
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.Documented;
@@ -15,7 +15,7 @@ import java.lang.annotation.Target;
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-@Import(CoreModuleConfiguration.class)
+@Import(CoreConfiguration.class)
 @Documented
 public @interface EnableCoreModule {
 }
