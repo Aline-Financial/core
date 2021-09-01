@@ -24,6 +24,7 @@ public class UserProfile {
     private String lastName;
     @MembershipId
     private String membershipId;
+    private int income;
     private ContactInfo contactInfo;
     private AddressResponse billingAddress;
     private AddressResponse mailingAddress;
