@@ -2,7 +2,9 @@ package com.aline.core.annotation;
 
 import com.aline.core.config.DisableSecurityConfig;
 import com.aline.core.security.config.AbstractWebSecurityConfig;
+import com.aline.core.security.config.JwtConfig;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.core.annotation.AliasFor;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 
@@ -22,6 +24,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 @EnableGlobalMethodSecurity
+@Import(JwtConfig.class)
 @ConditionalOnMissingBean(DisableSecurityConfig.class)
 @Documented
 public @interface WebSecurityConfiguration {

@@ -63,6 +63,10 @@ public abstract class AbstractWebSecurityConfig extends WebSecurityConfigurerAda
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/v3/api-docs/**",
+                "/h2",
+                "/h2/**",
+                "/h2-console",
+                "/h2-console/**",
                 "/health",
                 "/swagger-ui/**",
                 "/swagger-ui.html",
