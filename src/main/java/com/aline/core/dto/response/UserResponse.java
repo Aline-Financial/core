@@ -25,4 +25,8 @@ public class UserResponse {
     private UserRole role;
     private boolean enabled;
 
+    // Properties only shown in an authenticated user response
+    private Long memberId;
+    private String membershipId;
+
 }
