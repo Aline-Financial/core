@@ -1,5 +1,6 @@
 package com.aline.core.dto.request;
 
+import com.aline.core.validation.annotation.Name;
 import com.aline.core.validation.annotation.PhoneNumber;
 import com.aline.core.validation.annotation.Username;
 import lombok.AllArgsConstructor;
@@ -25,6 +26,8 @@ public class UserProfileUpdate {
     private String username;
     @Email
     private String email;
+    @Name
+    private String lastName;
     @PhoneNumber
     private String phone;
     private String driversLicense;
