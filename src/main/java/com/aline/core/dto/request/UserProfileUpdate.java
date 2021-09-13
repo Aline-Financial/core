@@ -1,14 +1,17 @@
 package com.aline.core.dto.request;
 
+import com.aline.core.validation.annotation.Address;
 import com.aline.core.validation.annotation.Name;
 import com.aline.core.validation.annotation.PhoneNumber;
 import com.aline.core.validation.annotation.Username;
+import com.aline.core.validation.annotation.Zipcode;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Email;
+import java.io.Serializable;
 
 /**
  * DTO used to update profile information.
@@ -20,7 +23,7 @@ import javax.validation.constraints.Email;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserProfileUpdate {
+public class UserProfileUpdate implements Serializable {
 
     @Username
     private String username;
@@ -32,7 +35,19 @@ public class UserProfileUpdate {
     private String phone;
     private String driversLicense;
     private int income;
-    private AddressChangeRequest billingAddress;
-    private AddressChangeRequest mailingAddress;
+
+    @Address
+    private String address;
+    private String city;
+    private String state;
+    @Zipcode
+    private String zipcode;
+
+    @Address
+    private String mailingAddress;
+    private String mailingCity;
+    private String mailingState;
+    @Zipcode
+    private String mailingZipcode;
 
 }
