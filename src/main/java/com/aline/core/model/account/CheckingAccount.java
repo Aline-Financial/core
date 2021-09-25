@@ -39,7 +39,7 @@ public class CheckingAccount extends Account {
      * @param amount The amount to increase the balance by
      */
     @Transient
-    public void increaseAvailableBalanace(int amount) {
+    public void increaseAvailableBalance(int amount) {
         availableBalance += amount;
     }
 
