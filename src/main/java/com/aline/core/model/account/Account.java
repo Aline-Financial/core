@@ -88,6 +88,29 @@ public class Account implements Serializable {
     @JsonBackReference
     private Set<Member> members;
 
+    /**
+     * Decrease balance by an absolute amount
+     * @param amount The amount to decrease by
+     */
+    @Transient
+    public void decreaseBalance(int amount) {
+        balance -= amount;
+    }
+
+    /**
+     * Increase balance by an absolute amount
+     * @param amount The amount to increase by
+     */
+    @Transient
+    public void increaseBalance(int amount) {
+        balance += amount;
+    }
+
+
+    /**
+     * Get the account type based on the discriminator value
+     * provided at creation of the class.
+     */
     @Transient
     public AccountType getAccountType() {
         DiscriminatorValue annotation = this.getClass().getAnnotation(DiscriminatorValue.class);
