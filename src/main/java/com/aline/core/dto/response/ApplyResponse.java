@@ -60,7 +60,7 @@ public class ApplyResponse implements Serializable {
      *     <em>This property does not exist if status is approved.</em>
      * </p>
      */
-    private String[] reason;
+    private String[] reasons;
 
     /**
      * Is true if accounts was successfully created in
