@@ -5,7 +5,6 @@ VALUES (1, '123 Aline Financial St.', 'New York', 'New York', '10001', '12345678
 INSERT IGNORE INTO branch (id, name, phone, address, city, state, zipcode, bank_id)
 VALUES (1, 'Main Branch', '(800) 123-4567', '123 Aline Financial St.', 'New York', 'New York', '10001', 1);
 
-
 /*********************************************************************
 ******************* USAGE WITH YOUR PROJECT **************************
 **********************************************************************

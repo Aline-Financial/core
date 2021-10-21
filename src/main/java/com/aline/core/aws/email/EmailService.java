@@ -178,13 +178,11 @@ public class EmailService {
         StringBuffer sb = new StringBuffer();
         while (matcher.find()) {
             String varPlaceholder = matcher.group();
-            log.info(varPlaceholder);
             Pattern varNamePattern = Pattern.compile("(?<=\\$\\{)[A-Za-z0-9]*(?=})");
             Matcher varNameMatcher = varNamePattern.matcher(varPlaceholder);
             String varName = "";
             if (varNameMatcher.find()) {
                 varName = varNameMatcher.group();
-                log.info(varName);
             }
 
             if (variables.containsKey(varName)) {

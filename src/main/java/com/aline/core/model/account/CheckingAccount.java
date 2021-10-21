@@ -8,6 +8,7 @@ import lombok.experimental.SuperBuilder;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.Transient;
 
 /**
  * Checking Account class.
@@ -32,4 +33,22 @@ public class CheckingAccount extends Account {
      * Available balance of the checking account.
      */
     private int availableBalance;
+
+    /**
+     * Increase available balance by an absolute amount
+     * @param amount The amount to increase the balance by
+     */
+    @Transient
+    public void increaseAvailableBalance(int amount) {
+        availableBalance += amount;
+    }
+
+    /**
+     * Decrease available balance by an absolute amount
+     * @param amount The amount to decrease balance by
+     */
+    @Transient
+    public void decreaseAvailableBalance(int amount) {
+        availableBalance -= amount;
+    }
 }
