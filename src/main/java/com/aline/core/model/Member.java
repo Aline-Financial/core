@@ -2,6 +2,7 @@ package com.aline.core.model;
 
 import com.aline.core.listener.CreateMemberListener;
 import com.aline.core.model.account.Account;
+import com.aline.core.model.card.Card;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,17 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.util.Set;
 
 @Entity
@@ -53,5 +44,15 @@ public class Member {
     @JsonManagedReference
     @ToString.Exclude
     private Set<Account> accounts;
+
+    @OneToMany
+    @JoinTable(
+            name = "card_holder",
+            joinColumns = @JoinColumn(name = "member_id"),
+            inverseJoinColumns = @JoinColumn(name = "card_id")
+    )
+    @JsonManagedReference
+    @ToString.Exclude
+    private Set<Card> cards;
 
 }
