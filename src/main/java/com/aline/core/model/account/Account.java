@@ -2,6 +2,7 @@ package com.aline.core.model.account;
 
 import com.aline.core.listener.CreateAccountListener;
 import com.aline.core.model.Member;
+import com.aline.core.model.card.Card;
 import com.aline.core.validation.annotation.AccountNumber;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
@@ -25,6 +26,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
@@ -87,6 +89,13 @@ public class Account implements Serializable {
     @ManyToMany(mappedBy = "accounts")
     @JsonBackReference
     private Set<Member> members;
+
+    /**
+     * Cards that access this account.
+     */
+    @OneToMany
+    @JsonBackReference
+    private Set<Card> cards;
 
     /**
      * Decrease balance by an absolute amount
