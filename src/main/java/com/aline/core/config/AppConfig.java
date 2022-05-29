@@ -38,6 +38,8 @@ public class AppConfig {
      */
     private String adminPortal;
 
+    private String defaultCardIssuer;
+
     /**
      * Accessor for com.aline.core.security properties
      */

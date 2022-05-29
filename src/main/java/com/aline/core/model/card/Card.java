@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -18,7 +19,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 @Getter
@@ -44,10 +45,11 @@ public class Card {
     private Account account;
 
     @NotNull
+    @Column(unique = true)
     private String cardNumber;
 
     @NotNull
-    private Date expirationDate;
+    private LocalDate expirationDate;
 
     @NotNull
     @Length(min = 3, max = 3)
